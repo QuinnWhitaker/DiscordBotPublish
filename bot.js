@@ -79,34 +79,35 @@ client.on('message', message => {
 		
 		collector.on('collect', (reaction) => {
 			if (voteStatus === 'ACTIVE') {
-					switch(reaction.emoji.name) {
-						case thumbsUp:
-							var hasThumbsDown = resultingMessage.reactions.resolve(thumbsDown)
-							if (hasThumbsDown) {
-								hasThumbsDown.users.remove(reactedUser);
-							}
-							memberStatuses[reactedUser] = thumbsUp;
-							break;
-							
-						case thumbsDown:
-							var hasThumbsUp = resultingMessage.reactions.resolve(thumbsUp)
-							if (hasThumbsUp) {
-								hasThumbsUp.users.remove(reactedUser);
-							}
-							memberStatuses[reactedUser] = thumbsDown;
-							break;
+				if (memberStatuses[reactedUser] === noVote) {
+					numberOfVotes++;
 				}
-				numberOfVotes++;
+				
+				switch(reaction.emoji.name) {
+					case thumbsUp:
+						var hasThumbsDown = resultingMessage.reactions.resolve(thumbsDown)
+						if (hasThumbsDown) {
+							hasThumbsDown.users.remove(reactedUser);
+						}
+						memberStatuses[reactedUser] = thumbsUp;
+						break;
+						
+					case thumbsDown:
+						var hasThumbsUp = resultingMessage.reactions.resolve(thumbsUp)
+						if (hasThumbsUp) {
+							hasThumbsUp.users.remove(reactedUser);
+						}
+						memberStatuses[reactedUser] = thumbsDown;
+						break;
+				}
+
 				if (numberOfVotes == numKeys(memberStatuses)) {
 					var numYes = 0;
-					var hasThumbsUp = resultingMessage.reactions.resolve(thumbsUp)
-					if (hasThumbsUp) {
-						numYes = hasThumbsUp.count
-					}
 					var numNo = 0;
-					var hasThumbsDown = resultingMessage.reactions.resolve(thumbsDown)
-					if (hasThumbsDown) {
-						numNo = hasThumbsDown.count
+					
+					for (var key in memberStatuses) {
+						if (memberStatuses[key] === thumbsUp) numYes++;
+						else if (memberStatuses[key] === thumbsDown) numNo++;
 					}
 					
 					if (numYes > numNo) {
@@ -119,6 +120,7 @@ client.on('message', message => {
 			}
 		});
 		
+		/*
 		client.on('messageReactionRemove', (reaction, user) => {
 			if (voteStatus === 'ACTIVE') {
 				if (reaction.emoji.toString() === thumbsUp.toString() || reaction._emoji.toString() == thumbsDown.toString()) {
@@ -128,12 +130,13 @@ client.on('message', message => {
 					if (reaction._emoji.toString() == thumbsDown.toString()) {
 						console.log("removing thumbs down");
 					}
-					memberStatuses[user] = noVote;
-					numberOfVotes--;
+					//memberStatuses[user] = noVote;
+					//numberOfVotes--;
 					resultingMessage.edit(constructString(resultingMessage));
 				}
 			}
 		});
+		*/
 	});
   }
   
