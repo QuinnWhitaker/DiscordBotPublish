@@ -97,7 +97,7 @@ client.on('message', message => {
 							break;
 				}
 				numberOfVotes++;
-				if (numberOfVotes == /*numKeys(memberStatuses)*/1) {
+				if (numberOfVotes == numKeys(memberStatuses)) {
 					var numYes = 0;
 					var hasThumbsUp = resultingMessage.reactions.resolve(thumbsUp)
 					if (hasThumbsUp) {
