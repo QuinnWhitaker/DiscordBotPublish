@@ -6,7 +6,7 @@ const Discord = require('discord.js');
 // Create an instance of a Discord client
 const client = new Discord.Client();
 
-const voteChannelId = '677690362029932594';
+const voteChannelId = '685413820096577573';
 const memberRoleId = '677562715799027713';
 const thumbsUp = '👍';
 const thumbsDown = '👎';
