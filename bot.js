@@ -24,7 +24,7 @@ client.on('ready', () => {
 // Create an event listener for messages
 client.on('message', message => {
   // If the message is "ping"
-  var voteCommand = '!vote '
+  var voteCommand = '!voteTest '
   if (message.content.startsWith(voteCommand)) {
 	
 	const title = message.content.replace(voteCommand, '');
