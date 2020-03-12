@@ -58,6 +58,9 @@ client.on('message', message => {
 	// The current number of votes that have occured.
 	var numberOfVotes = 0;
 	
+	// Whether the removal of a vote was a result of the program automatically changing a vote
+	var swappedThumbs = false;
+	
 	// An overly complicated function to grab the length of the memberStatuses list.
 	function numKeys(o) {
 	   var res = 0;
@@ -127,8 +130,6 @@ client.on('message', message => {
 					if (memberStatuses[reactedUser] === noVote) {
 						numberOfVotes++;
 					}
-					
-					var swappedThumbs = false;
 					
 					// Based on what the reaction is, a different type of vote will be added.
 					switch(reaction.emoji.name) {
