@@ -91,6 +91,22 @@ client.on('message', message => {
 		return retString;
 	}
 	
+	// To do: format this function like the records in #records
+	function constructRecord(m) {
+		var retString = '==== **VOTE: ' + title + '** ==== \n\n **Issued By:** ' + issuedBy + '\n\n' 
+		for (var key in memberStatuses) {
+			retString += key.toString() + ': ' + memberStatuses[key] + '\n'
+		}
+		retString += '\n**Status: ' + voteStatus + '** (' + numberOfVotes + '/' + numKeys(memberStatuses) + ')\n\n'
+		
+		if (voteStatus === 'ACTIVE') {
+			retString += '*(To vote, react to this with ' + thumbsUp + ' or ' + thumbsDown + ')*'
+		} else {
+			retString += '*(This vote is now closed.)*'
+		}
+		return retString;
+	}
+	
 	// sendString will contain the string that is eventually replacing the active vote's text.
 	var sendString = constructString(message);
 	
