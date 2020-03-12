@@ -135,7 +135,7 @@ client.on('message', message => {
 						// If the vote is a thumbs up
 						case thumbsUp:
 							// If the user already has a thumbs down vote
-							var hasThumbsDown = resultingMessage.reactions.resolve(thumbsDown)
+							var hasThumbsDown = resultingMessage.reactions.resolve(thumbsDown);
 							if (hasThumbsDown) {
 								// Remove the thumbs down vote
 								swappedThumbs = true;
@@ -194,8 +194,8 @@ client.on('message', message => {
 						if (reaction._emoji.toString() == thumbsDown.toString()) {
 							console.log("removing thumbs down");
 						}
-						//memberStatuses[user] = noVote;
-						//numberOfVotes--;
+						memberStatuses[user] = noVote;
+						numberOfVotes--;
 						resultingMessage.edit(constructString(resultingMessage));
 					}
 				}
