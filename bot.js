@@ -35,7 +35,7 @@ client.on('ready', () => {
 client.on('message', message => {
 	
   // The vote command the bot looks for
-  var voteCommand = '!voteTest '
+  var voteCommand = '!vote '
   
   // If the message starts with the vote command
   if (message.content.startsWith(voteCommand)) {
