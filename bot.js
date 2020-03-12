@@ -187,7 +187,7 @@ client.on('message', message => {
 			});
 			
 			client.on('messageReactionRemove', (reaction, user) => {
-				if (voteStatus === 'ACTIVE' && swappedThumbs) {
+				if (voteStatus === 'ACTIVE' && !swappedThumbs) {
 					if (reaction.emoji.toString() === thumbsUp.toString() || reaction._emoji.toString() == thumbsDown.toString()) {
 						if (reaction.emoji.toString() === thumbsUp.toString()) {
 							console.log("removing thumbs up");
