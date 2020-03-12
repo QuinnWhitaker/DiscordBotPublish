@@ -7,7 +7,10 @@ const Discord = require('discord.js');
 const client = new Discord.Client();
 
 // The id of the channel where active votes will be posted.
-const voteChannelId = '677690362029932594';
+const voteChannelId = '685413820096577573';
+
+// The id of the channel where votes will be recorded.
+const recordChannelId = '687488031233540146';
 
 // The id of the Member role, the role that each voter must have to be counted in and participate in the vote.
 const memberID = '677562715799027713';
@@ -40,7 +43,7 @@ client.on('message', message => {
 	// Get all content of the message other than the vote command. This will be the title of the vote.
 	const title = message.content.replace(voteCommand, '');
 	
-	// Get the writer of the message. They are the author.
+	// Get the author of the message.
 	const issuedBy = message.author.toString();
 	
 	// The current status of the vote. It begins as active, and will become either PASSED or FAILED when the vote is finished.
@@ -130,7 +133,8 @@ client.on('message', message => {
 						// If the vote is a thumbs up
 						case thumbsUp:
 							// If the user already has a thumbs down vote
-							if (resultingMessage.reactions.resolve(thumbsDown)) {
+							hasThumbsDown = resultingMessage.reactions.resolve(thumbsDown)
+							if (hasThumbsDown) {
 								// Remove the thumbs down vote
 								hasThumbsDown.users.remove(reactedUser);
 							}
@@ -140,7 +144,8 @@ client.on('message', message => {
 						// If the vote is a thumbs down
 						case thumbsDown:
 							// If the user already has a thumbs up vote
-							if (resultingMessage.reactions.resolve(thumbsUp)) {
+							hasThumbsUp = resultingMessage.reactions.resolve(thumbsUp);
+							if (hasThumbsUp) {
 								// Remove the thumbs up vote
 								hasThumbsUp.users.remove(reactedUser);
 							}
@@ -149,17 +154,19 @@ client.on('message', message => {
 							break;
 					}
 					
-					// If the number of votes equals to number of eligible voters
-					if (numberOfVotes == numKeys(memberStatuses)) {
-						// Tally the votes, using a socre system.
-						var numYes = 0;
-						var numNo = 0;
-						
-						for (var key in memberStatuses) {
-							if (memberStatuses[key] === thumbsUp) numYes++;
-							else if (memberStatuses[key] === thumbsDown) numNo++;
-						}
-						
+					// Count the number of "yes" and "no" votes
+					
+					var numYes = 0;
+					var numNo = 0;
+					
+					for (var key in memberStatuses) {
+						if (memberStatuses[key] === thumbsUp) numYes++;
+						else if (memberStatuses[key] === thumbsDown) numNo++;
+					}
+					
+					// If the number of votes equals the number of eligible voters OR the vote is already unanimous in the majority
+					if (numberOfVotes == numKeys(memberStatuses) || (numYes > (numKeys / 2)) || (numNo > (numKeys / 2))) {
+
 						// Only if the number of yes votes EXCEEDS the number of no votes will the vote pass
 						// Ties will count as a failure
 						if (numYes > numNo) {
