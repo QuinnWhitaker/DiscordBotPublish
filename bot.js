@@ -128,14 +128,17 @@ client.on('message', message => {
 						numberOfVotes++;
 					}
 					
+					var swappedThumbs = false;
+					
 					// Based on what the reaction is, a different type of vote will be added.
 					switch(reaction.emoji.name) {
 						// If the vote is a thumbs up
 						case thumbsUp:
 							// If the user already has a thumbs down vote
-							hasThumbsDown = resultingMessage.reactions.resolve(thumbsDown)
+							var hasThumbsDown = resultingMessage.reactions.resolve(thumbsDown)
 							if (hasThumbsDown) {
 								// Remove the thumbs down vote
+								swappedThumbs = true;
 								hasThumbsDown.users.remove(reactedUser);
 							}
 							// Change the user's vote stuatus to thumbs up.
@@ -144,9 +147,10 @@ client.on('message', message => {
 						// If the vote is a thumbs down
 						case thumbsDown:
 							// If the user already has a thumbs up vote
-							hasThumbsUp = resultingMessage.reactions.resolve(thumbsUp);
+							var hasThumbsUp = resultingMessage.reactions.resolve(thumbsUp);
 							if (hasThumbsUp) {
 								// Remove the thumbs up vote
+								swappedThumbs = true;
 								hasThumbsUp.users.remove(reactedUser);
 							}
 							// Change the user's vote status to thumbs down.
@@ -181,9 +185,8 @@ client.on('message', message => {
 				}
 			});
 			
-			/*
 			client.on('messageReactionRemove', (reaction, user) => {
-				if (voteStatus === 'ACTIVE') {
+				if (voteStatus === 'ACTIVE' && swappedThumbs) {
 					if (reaction.emoji.toString() === thumbsUp.toString() || reaction._emoji.toString() == thumbsDown.toString()) {
 						if (reaction.emoji.toString() === thumbsUp.toString()) {
 							console.log("removing thumbs up");
@@ -196,8 +199,10 @@ client.on('message', message => {
 						resultingMessage.edit(constructString(resultingMessage));
 					}
 				}
+				
+				swappedThumbs = false;
 			});
-			*/
+			
 		});
   }
   
