@@ -198,13 +198,7 @@ client.on('message', message => {
 				}
 			});
 			*/
-		}
-		
-		// If the result is a failure.
-		(errorMessage) => {
-			console.log("The vote message failed to send to the active vote channel. Reason: ", errorMessage);
-		}
-	);
+		});
   }
   
 });
