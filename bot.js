@@ -7,7 +7,7 @@ const Discord = require('discord.js');
 const client = new Discord.Client();
 
 // The id of the channel where active votes will be posted.
-const voteChannelId = '685413820096577573';
+const voteChannelId = '677690362029932594';
 
 // The id of the channel where votes will be recorded.
 const recordChannelId = '687488031233540146';
