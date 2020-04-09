@@ -1,0 +1,47 @@
+!vote this is a test !option :emoji: aldskjfhalsdkf !option :emoji: akldjhfadf !option :emoji: kjhlkasdhjf
+
+function updateVote(message, voteTitle, map[title][emoji] optionsList) {
+
+	map[user][emoji] currentVotes
+
+	remove all reactions except one for each member
+
+	forEach (user in member role) {
+		forEach (response in message) {
+				
+		}
+	}
+
+	
+	message = 
+	"
+	VOTE: [voteTitle]
+
+	OPTION 1: [title] - [emoji]
+	OPTION 2: [title] - [emoji]
+
+		
+	"
+}
+
+on load {
+	
+}
+
+when (a user types !vote) {
+	if (that !vote contains !option) {
+		break up the options by name and emoji, adding it to the list of options
+		optionList = map[title][emoji]
+	} else {
+		the list is :thumbsup: and :thumbsdown:
+		optionList = { [Yes][:thumbsup:], [No][:thumbsdown:] }
+	}
+}
+
+when (a user adds a reaction to a post) {
+	if ( the post is in the active votes area ) {
+		remove all reactions by that user except for the one they JUST placed
+	}
+
+		
+}
