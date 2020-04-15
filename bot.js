@@ -89,7 +89,7 @@ client.on('message', message => {
 				
 				console.log(json);	
 				
-				var path = '.\votes\' + messageID + '.json'
+				var path = '.\\votes\\' + messageID + '.json'
 				
 				const fs = require('fs')
 
