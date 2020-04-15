@@ -56,6 +56,21 @@ client.on('message', message => {
 		
 		// Attempt to send the sendString message to the active vote channel 
 		let promisedMessage = client.channels.resolve(voteChannelId).send(sendString);
+			
+		promisedMessage.then(
+
+			resultingMessage => {
+				// If the message successfully sent
+				
+				console.log("Poll created.");
+				
+			}, rejectionReason => {
+				// If the message failed to send
+				
+				console.log("Failed to create poll in active votes channel. Reason: ", rejectionReason);
+			}
+		);
+		
 	
 		// Create a local file documenting the poll and its contents
 		/*
