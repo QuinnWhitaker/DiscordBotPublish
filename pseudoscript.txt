@@ -7,8 +7,11 @@ COMMANDS:
 when the program starts {
 
 	Go through each txt file in the votes folder
-	For each vote file {
-		Look up and edit the vote in the active votes chat to the current formatting
+	
+	For each vote file with a poll found in the active votes channel {
+	
+		Look up and edit the poll in the active votes channel to the current formatting
+		
 	} 
 	
 }
@@ -23,11 +26,11 @@ when a user types "!vote" ANYWHERE {
 		
 	} else if it is multiple option {
 	
-		Create a multiple option poll in the active votes chat, and a txt file in the votes folder documenting its information
+		Create a multiple option poll in the active votes channel, and a txt file in the votes folder documenting its information
 		
 	} else if it is yes/no {
 	
-		Create a yes/no poll in the active votes chat, and a txt file in the votes folder documenting its information
+		Create a yes/no poll in the active votes channel, and a txt file in the votes folder documenting its information
 		
 	}
 	
@@ -38,7 +41,19 @@ when a user reacts to a message {
 	lookup the txt file for that message in the votes folder. 
 	
 	If it is found {
+	
 		remove all reactions by that user other than the reaction given
+		
+		update the txt file so that the new vote is submitted
+		
+		Analyze the current votes. If there is a >50% majority OR all the votes are concluded {
+		
+			update the txt file so that the status is ended
+			
+			Send a new message to the RECORDS channel
+			
+			(Put placeholder text in the CONCLUSION section, so that Admins may edit the conclusion)
+		}
 		
 	}
 	
