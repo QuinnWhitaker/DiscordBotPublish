@@ -80,27 +80,27 @@ client.on('message', message => {
 					
 				}
 				 
-				var data = new JsonMessage();
 				
-				console.log(JSON.stringify(data));
 				
 				// Create a local JSON file documenting the poll and its contents
+
+				var data = new JsonMessage();
+				var json = JSON.stringify(data);
 				
-				var path = '.\votes'
+				console.log(json);	
+				
+				var path = '.\votes\' + messageID + '.json'
 				
 				const fs = require('fs')
 
-				const storeData = (data, path) => {
+				try {
 					
-					try {
-						
-						fs.writeFileSync(path, JSON.stringify(data))
-						
-				  } catch (err) {
-					  
+					fs.writeFileSync(path, json, 'utf8', callback);
+					
+				} catch (err) {
+					
 					console.error(err)
-					
-				  }
+				
 				}
 				
 			}, rejectionReason => {
