@@ -1,47 +1,47 @@
-!vote this is a test !option :emoji: aldskjfhalsdkf !option :emoji: akldjhfadf !option :emoji: kjhlkasdhjf
+COMMANDS:
 
-function updateVote(message, voteTitle, map[title][emoji] optionsList) {
+!vote "yes/no poll"
 
-	map[user][emoji] currentVotes
+!vote "multiple option poll" :emoji: "aldskjfhalsdkf" :emoji: "akldjhfadf" :emoji: "kjhlkasdhjf"
 
-	remove all reactions except one for each member
+when the program starts {
 
-	forEach (user in member role) {
-		forEach (response in message) {
-				
-		}
-	}
-
-	
-	message = 
-	"
-	VOTE: [voteTitle]
-
-	OPTION 1: [title] - [emoji]
-	OPTION 2: [title] - [emoji]
-
-		
-	"
-}
-
-on load {
+	Go through each txt file in the votes folder
+	For each vote file {
+		Look up and edit the vote in the active votes chat to the current formatting
+	} 
 	
 }
 
-when (a user types !vote) {
-	if (that !vote contains !option) {
-		break up the options by name and emoji, adding it to the list of options
-		optionList = map[title][emoji]
-	} else {
-		the list is :thumbsup: and :thumbsdown:
-		optionList = { [Yes][:thumbsup:], [No][:thumbsdown:] }
-	}
-}
+when a user types "!vote" ANYWHERE {
 
-when (a user adds a reaction to a post) {
-	if ( the post is in the active votes area ) {
-		remove all reactions by that user except for the one they JUST placed
-	}
-
+	decipher the text and determine if it is yes/no, multiple option, or invalid.
+	
+	If it is invalid {
+	
+		Write a message in that thread reminding them how to format it
 		
+	} else if it is multiple option {
+	
+		Create a multiple option poll in the active votes chat, and a txt file in the votes folder documenting its information
+		
+	} else if it is yes/no {
+	
+		Create a yes/no poll in the active votes chat, and a txt file in the votes folder documenting its information
+		
+	}
+	
 }
+
+when a user reacts to a message {
+
+	lookup the txt file for that message in the votes folder. 
+	
+	If it is found {
+		remove all reactions by that user other than the reaction given
+		
+	}
+	
+	
+}
+
