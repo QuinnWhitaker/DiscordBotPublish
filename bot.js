@@ -62,7 +62,7 @@ client.on('message', message => {
 			resultingMessage => {
 				// If the message successfully sent
 				
-				console.log("Poll created.");
+				console.log("Poll created. Message ID: ", resultingMessage.id);
 				
 			}, rejectionReason => {
 				// If the message failed to send
