@@ -62,7 +62,46 @@ client.on('message', message => {
 			resultingMessage => {
 				// If the message successfully sent
 				
-				console.log("Poll created. Message ID: ", resultingMessage.id);
+				// Declare the ID of the new message
+				const messageID = resultingMessage.id;
+				
+				console.log("Poll created. Message ID: ", messageID);
+				
+				// Declare the class that will be converted to a JSON object
+				function JsonMessage() {
+					
+					this.voteTitle = voteTitle;
+					
+					this.issuedBy = issuedBy;
+					
+					this.voteStatus = voteStatus;
+					
+					this.voteDictionary = voteDictionary;
+					
+				}
+				 
+				var data = new JsonMessage();
+				
+				console.log(JSON.stringify(data));
+				
+				// Create a local JSON file documenting the poll and its contents
+				
+				var path = '.\votes'
+				
+				const fs = require('fs')
+
+				const storeData = (data, path) => {
+					
+					try {
+						
+						fs.writeFileSync(path, JSON.stringify(data))
+						
+				  } catch (err) {
+					  
+					console.error(err)
+					
+				  }
+				}
 				
 			}, rejectionReason => {
 				// If the message failed to send
@@ -72,18 +111,8 @@ client.on('message', message => {
 		);
 		
 	
-		// Create a local file documenting the poll and its contents
-		/*
-		var fs = require('fs');
+		
 
-		fs.appendFile('.\votes\mynewfile1.txt', 'Hello content!', function (err) {
-			
-			if (err) throw err;
-		  
-			console.log('Saved file!');
-		  
-		});
-		*/
 		
 	}
 });
