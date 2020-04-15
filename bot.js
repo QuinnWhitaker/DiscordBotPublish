@@ -95,7 +95,7 @@ client.on('message', message => {
 
 				try {
 					
-					fs.writeFileSync(path, json, 'utf8', callback);
+					fs.writeFileSync(path, json);
 					
 				} catch (err) {
 					
