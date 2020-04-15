@@ -24,12 +24,39 @@ client.on('ready', () => {
   
 });
 
-function formatPollString(vote_title, issued_by, vote_status, vote_dictionary, ) {
+function formatPollString(vote_title, issued_by, vote_status, vote_dictionary) {
 	
 	var poll = 	'==== **VOTE: ' + vote_title 	+ '** ==== \n\n **Issued By:** ' 	+ issued_by + '\n' 
 	poll += 	'\n**Status: ' 	+ vote_status 	+ '**\n\n'
-
+	poll += 	':thumbsup: \n'
+	poll += 	':thumbsdown: \n'
 	return poll
+}
+
+function updatePoll(message_id) {
+	
+	// Find the JSON file associated with the message_id
+	// If it doesn't exist, throw an error and return
+	
+	// Otherwise
+		// Get the pool of possible reactions from the JSON file
+		
+		// Declare newVoteDictionary and newVoteStatus variables
+		
+		// For each user with the Member class
+			// If they have reacted to the poll with id = message_id
+				// Find the latest reaction on that message by that user that is within the pool of possible reactions
+				// Remove all other reactions on that message by that user that are within the pool of possible reactions
+				// Update newVoteDictionary with key = [that user] to value = [that reaction]
+			// Otherwise, update newVoteDictionary with key = [that user] to value = null
+			
+		// Determine whether the vote needs to be closed.
+		// If the vote is NOT multipleChoice
+			// Count the number of thumbs up symbols (of all types) as well as thumbs down symbols in the newVoteDictionary
+		// Otherwise count the number of each unique reaction in the poll (from the pool of possible reactions)
+		// If all votes of one type exceed the other by more than 50%, OR every possible voter has voted, close the poll by setting the newVoteStatus
+		
+		// Update the JSON file with the newVoteDictionary and newVoteStatus
 }
 
 // Whenever a user types a message
@@ -44,13 +71,26 @@ client.on('message', message => {
 		// Get the title of the vote (Same as postPreFix until multiple options have been implemented)
 		const voteTitle = postPreFix;
 		
+		const multipleChoice = false;
+		
+		// Declare the pool of possible votes.
+		var possibleVotes = {}
+		
+		// If it is multiple choice
+		if (multipleChoice) {
+			// Grab each possible vote from the postPreFix
+		} else {
+			// Add each thumbs up and thumbs down to the list of possible votes.
+			
+		}
+		
 		// Get the author of the message
 		const issuedBy = message.author.toString();
 		
 		// Declare the status of the vote as ACTIVE
 		var voteStatus = 'ACTIVE';
 		
-		var voteDictionary = 1;
+		var voteDictionary = {};
 		
 		var sendString = formatPollString(voteTitle, issuedBy, voteStatus, voteDictionary);
 		
@@ -70,6 +110,10 @@ client.on('message', message => {
 				// Declare the class that will be converted to a JSON object
 				function JsonMessage() {
 					
+					this.pollId = messageID;
+					
+					this.multipleChoice = multipleChoice;
+					
 					this.voteTitle = voteTitle;
 					
 					this.issuedBy = issuedBy;
@@ -79,19 +123,18 @@ client.on('message', message => {
 					this.voteDictionary = voteDictionary;
 					
 				}
-				 
-				
 				
 				// Create a local JSON file documenting the poll and its contents
 
 				var data = new JsonMessage();
+				
 				var json = JSON.stringify(data);
 				
 				console.log(json);	
 				
 				var path = '.\\votes\\' + messageID + '.json'
 				
-				const fs = require('fs')
+				const fs = require('fs');
 
 				try {
 					
@@ -102,6 +145,9 @@ client.on('message', message => {
 					console.error(err)
 				
 				}
+				
+				// Update the poll with the current vote status.
+				updatePoll(messageID);
 				
 			}, rejectionReason => {
 				// If the message failed to send
