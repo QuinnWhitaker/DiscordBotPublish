@@ -26,8 +26,8 @@ client.on('ready', () => {
 
 function formatPollString(vote_title, issued_by, vote_status, vote_dictionary, ) {
 	
-	var poll = 	'==== **VOTE: ' + vote_title 	+ '** ==== \n\n **Issued By:** ' 	+ issued_by + '\n\n' 
-	poll += 	'\n**Status: ' 	+ vote_status 	+ '\n\n'
+	var poll = 	'==== **VOTE: ' + vote_title 	+ '** ==== \n\n **Issued By:** ' 	+ issued_by + '\n' 
+	poll += 	'\n**Status: ' 	+ vote_status 	+ '**\n\n'
 
 	return poll
 }
@@ -52,7 +52,10 @@ client.on('message', message => {
 		
 		var voteDictionary = 1;
 		
-		console.log( formatPollString(voteTitle, issuedBy, voteStatus, voteDictionary) );
+		var sendString = formatPollString(voteTitle, issuedBy, voteStatus, voteDictionary);
+		
+		// Attempt to send the sendString message to the active vote channel 
+		let promisedMessage = client.channels.resolve(voteChannelId).send(sendString);
 	
 		// Create a local file documenting the poll and its contents
 		/*
