@@ -7,8 +7,11 @@ const Discord = require('discord.js');
  * The ready event is vital, it means that only _after_ this will your bot start reacting to information
  * received from Discord
  */
+ 
 client.on('ready', () => {
+	
   console.log('I am ready!');
+  
 });
 
 // Create an event listener for messages
@@ -17,6 +20,13 @@ client.on('message', message => {
 	var voteCommand = '!vote1 ';
 	
 	if (message.content.startsWith(voteCommand)) {
+		
+		var fs = require('fs');
+
+		fs.appendFile('mynewfile1.txt', 'Hello content!', function (err) {
+		  if (err) throw err;
+		  console.log('Saved!');
+		});
 		
 	}
 });
