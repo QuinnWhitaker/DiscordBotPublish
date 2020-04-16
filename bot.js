@@ -247,29 +247,27 @@ client.on('message', message => {
 		const multipleChoice = false;
 		
 		// Declare the pool of possible votes.
-		var possibleVotes = Array.prototype.map;
+		var possibleVotes = new Map();
 		
 		// If it is multiple choice
 		if (multipleChoice) {
 			// Grab each possible vote from the postPreFix
 		} else {
 			// Set the list of possible votes to thumbs up and thumbs down
-			// Declare the list of all thumbs up and thumbs down votes
-			let yesNoVotes = new Map([
-				{':thumbsup:': 			'Yay'},
-				{':thumbsup_tone1:': 	'Yay'},
-				{':thumbsup_tone2:': 	'Yay'},
-				{':thumbsup_tone3:': 	'Yay'},
-				{':thumbsup_tone4:': 	'Yay'},
-				{':thumbsup_tone5:': 	'Yay'},
-				{':thumbsdown:': 		'Nay'},
-				{':thumbsdown_tone1:': 	'Nay'},
-				{':thumbsdown_tone2:': 	'Nay'},
-				{':thumbsdown_tone3:': 	'Nay'},
-				{':thumbsdown_tone4:': 	'Nay'},
-				{':thumbsdown_tone5:': 	'Nay'}
-			]);
-			possibleVotes = yesNoVotes;
+			
+			possibleVotes.set(':thumbsup:', 'Yay');
+			possibleVotes.set(':thumbsup_tone1:', 'Yay');
+			possibleVotes.set(':thumbsup_tone2:', 'Yay');
+			possibleVotes.set(':thumbsup_tone3:', 'Yay');
+			possibleVotes.set(':thumbsup_tone4:', 'Yay');
+			possibleVotes.set(':thumbsup_tone5:', 'Yay');
+			possibleVotes.set(':thumbsdown:', 'Nay');
+			possibleVotes.set(':thumbsdown_tone1:', 'Nay');
+			possibleVotes.set(':thumbsdown_tone2:', 'Nay');
+			possibleVotes.set(':thumbsdown_tone3:', 'Nay');
+			possibleVotes.set(':thumbsdown_tone4:', 'Nay');
+			possibleVotes.set(':thumbsdown_tone5:', 'Nay');
+
 		}
 		
 		// Get the author of the message
