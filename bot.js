@@ -16,6 +16,22 @@ const voteCommand = '!vote1 ';
 // What does it say next to someone's name when they haven't voted?
 const noVote = 'Vote Pending';
 
+// Declare the list of all thumbs up and thumbs down votes
+const yesNoVotes = {
+	':thumbsup:',
+	':thumbsup_tone1:',
+	':thumbsup_tone2:',
+	':thumbsup_tone3:',
+	':thumbsup_tone4:',
+	':thumbsup_tone5:',
+	':thumbsdown:',
+	':thumbsdown_tone1:',
+	':thumbsdown_tone2:',
+	':thumbsdown_tone3:',
+	':thumbsdown_tone4:',
+	':thumbsdown_tone5:',
+}
+
 
 // When the bot is ready 
 client.on('ready', () => {
@@ -28,8 +44,6 @@ function formatPollString(vote_title, issued_by, vote_status, vote_dictionary) {
 	
 	var poll = 	'==== **VOTE: ' + vote_title 	+ '** ==== \n\n **Issued By:** ' 	+ issued_by + '\n' 
 	poll += 	'\n**Status: ' 	+ vote_status 	+ '**\n\n'
-	poll += 	':thumbsup: \n'
-	poll += 	':thumbsdown: \n'
 	return poll
 }
 
@@ -68,7 +82,7 @@ client.on('message', message => {
 		// Get all content of the message beyond the prefix.
 		const postPreFix = message.content.replace(voteCommand, '');
 		
-		// Get the title of the vote (Same as postPreFix until multiple options have been implemented)
+		// Get the title of the vote (Same as postPreFix until multiple choice has been implemented)
 		const voteTitle = postPreFix;
 		
 		const multipleChoice = false;
@@ -80,8 +94,8 @@ client.on('message', message => {
 		if (multipleChoice) {
 			// Grab each possible vote from the postPreFix
 		} else {
-			// Add each thumbs up and thumbs down to the list of possible votes.
-			
+			// Set the list of possible votes to thumbs up and thumbs down
+			possibleVotes = yesNoVotes;
 		}
 		
 		// Get the author of the message
@@ -113,6 +127,8 @@ client.on('message', message => {
 					this.pollId = messageID;
 					
 					this.multipleChoice = multipleChoice;
+					
+					this.possibleVotes = possibleVotes;
 					
 					this.voteTitle = voteTitle;
 					
