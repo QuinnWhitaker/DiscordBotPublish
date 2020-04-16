@@ -44,6 +44,7 @@ client.on('ready', () => {
 });
 
 function formatPollString(vote_title, issued_by, vote_status, multiple_choice, possible_votes, vote_dictionary) {
+	// This function takes in all the relevant information of a poll and generates a string for the message content to be updated as
 	
 	var poll = 	'==== **" ' + vote_title 	+ ' **" ====\n\n**Issued By:** ' 	+ issued_by + '\n\n' 
 	poll +=		'**== Options ==** \n'
@@ -59,7 +60,6 @@ function formatPollString(vote_title, issued_by, vote_status, multiple_choice, p
 		
 		poll += '**== Current Votes ==** \n'
 		
-		console.log(vote_dictionary);
 		for (var member in vote_dictionary) {
 			
 			poll += member.toString() + ' : ' + vote_dictionary[member] + '\n';
@@ -73,6 +73,13 @@ function formatPollString(vote_title, issued_by, vote_status, multiple_choice, p
 }
 
 function updatePoll(message) {
+	// This function updates a poll by performing the following actions
+		// 1) Takes the poll as a message argument
+		// 2) Identifies the JSON associated with the poll and confirms its existence
+		// 3) Confirms that the message still exists
+		// 4) Checks who has currently reacted to the message and uses this information to balance the votes
+		// 5) Uses the new information to update the JSON file as well as the text of the message
+		// 6) Closes the poll if it is concluded, sending a message to the records channel
 	
 	// Find the JSON file associated with the message_id
 	const fs = require('fs')
@@ -87,7 +94,6 @@ function updatePoll(message) {
 			// Import the JSON file
 			let rawdata = fs.readFileSync(path);
 			let this_poll = JSON.parse(rawdata);
-			console.log(this_poll);
 			
 			// Get the pool of possible reactions from the JSON file
 			const possible_reactions = this_poll.possibleVotes;
@@ -102,7 +108,7 @@ function updatePoll(message) {
 				
 				var userReacted = false;
 				
-				// See if that user has reacted to this message (For now, assume NO)
+				// See if that user has reacted to this message with a reaction from the possible votes (For now, assume NO)
 				
 				// For each messageReaction in the ReactionManager of this message
 				/*
@@ -117,8 +123,9 @@ function updatePoll(message) {
 				
 				// If they have reacted to the poll
 				if (userReacted) {
-					// Find the latest reaction on that message by that user that is within the pool of possible reactions
-					// Remove all other reactions on that message by that user that are within the pool of possible reactions
+					// ! - Warning: The reaction collector should handle duplicate reactions. This block assumes that
+					// each user has at most one reaction from among the possible votes
+					
 					// Update newVoteDictionary with key = [that user] to value = [that reaction]
 				} else {
 					// update newVoteDictionary with key = [that user] to value = noVote
@@ -136,8 +143,6 @@ function updatePoll(message) {
 			// Update the JSON file with the newVoteDictionary and newVoteStatus
 
 			this_poll.voteDictionary = newVoteDictionary;
-			
-			console.log(this_poll);
 			
 			var json = JSON.stringify(this_poll);
 
@@ -162,6 +167,73 @@ function updatePoll(message) {
 				console.error(err)
 			
 			}
+		}
+		
+	// If the JSON doesn't exist
+	} catch(err) {
+		
+		console.error(err)
+		
+	}
+}
+
+function addCollector(message) {
+	// This function takes a poll and adds a collector to await reactions from users
+	
+	// Find the JSON file associated with the message_id
+	const fs = require('fs')
+
+	const path = '.\\votes\\' + message.id + '.json'
+	
+	try {
+		
+		// If the JSON exists
+		if (fs.existsSync(path)) {
+			
+			// Import the JSON file
+			let rawdata = fs.readFileSync(path);
+			let this_poll = JSON.parse(rawdata);
+			
+			// Get the pool of possible reactions from the JSON file
+			const possible_reactions = this_poll.possibleVotes;
+			
+			// Whenever a user reacts to the message
+			const filter = (reaction, user) => {
+				
+				// If the user is not a bot and the reaction is included in the list of approved reactions, the filter will approve of the reaction.
+				if ((!user.bot) && (possible_reactions.includes(reaction.emoji.name))) {
+					
+					return true;
+					
+				} else return false;
+				
+			}
+			
+			// Create a reaction collector variable with the above filter.
+			const collector = resultingMessage.createReactionCollector(filter);
+			
+			// Whenever the collector receives an approved reaction
+			collector.on('collect', (reaction, user) => {
+				
+				console.log('reaction.emoji.name: ', reaction.emoji.name);
+				
+				// Remove all other reactions from that user that exist in possibleReactions
+				
+				// For each messageReaction in the ReactionManager of the message
+				message.reactions.cache.forEach(function (messageReaction) {
+					
+					console.log('messageReaction.emoji.name: ', messageReaction.emoji.name);
+					// If the list of possibleReactions includes the name of the emoji of this messageReaction
+					
+				});
+				
+				// update the poll
+				
+				
+				
+
+			});
+			
 		}
 		
 	// If the JSON doesn't exist
@@ -259,6 +331,9 @@ client.on('message', message => {
 				
 				// Update the poll with the current vote status.
 				updatePoll(resultingMessage);
+				
+				// Add the Collector for this message (future runs of the program will instead add the collector on ready)
+				addCollector(resultingMessage)
 				
 			}, rejectionReason => {
 				// If the message failed to send
