@@ -189,10 +189,14 @@ function addCollector(message) {
 			const filter = (reaction, user) => {
 				
 				console.log('Using filter...');
+				console.log('reaction.emoji: ', reaction.emoji);
 				console.log('reaction.emoji.name: ', reaction.emoji.name);
+				console.log('reaction.emoji.id: ', reaction.emoji.id);
+				console.log('reaction.emoji.identifier: ', reaction.emoji.identifier);
+				console.log('reaction.emoji.createdAt: ', reaction.emoji.createdAt);
 
 				// If the user is not a bot and the reaction is included in the list of approved reactions, the filter will approve of the reaction.
-				if ((!user.bot) /*&& (reaction.emoji.name in possible_reactions)*/) {
+				if ((!user.bot) && (reaction.emoji.name in possible_reactions)) {
 					
 					return true;
 					
