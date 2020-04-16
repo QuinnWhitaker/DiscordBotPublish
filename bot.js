@@ -10,6 +10,9 @@ const client = new Discord.Client();
 // const voteChannelId = '677690362029932594'; // Main channel - comment out when testing
 const voteChannelId = '685413820096577573'; // Test channel - comment out when deploying
 
+// The id of the Member role, the role that voters must have to participate in the vote.
+const memberID = '677562715799027713';
+
 // Declare the prefix command for voting
 const voteCommand = '!vote1 ';
 
@@ -60,17 +63,22 @@ function updatePoll(message_id) {
 		// If the JSON exists
 		if (fs.existsSync(path)) {
 			
-			// Get the pool of possible reactions from the JSON file
-
+			// Import the JSON file
 			let rawdata = fs.readFileSync(path);
 			let this_poll = JSON.parse(rawdata);
 			console.log(this_poll);
 			
-			// const possible_reactions = 
+			// Get the pool of possible reactions from the JSON file
+			const possible_reactions = this_poll.possibleVotes;
 			
-			// Declare newVoteDictionary and newVoteStatus variables
+			// Declare dictionary and status variables, to eventually replace those in the JSON
+			var newVoteDictionary = "";
+			var newVoteStatus = "";
 			
 			// For each user with the Member class
+			message.guild.roles.resolve(memberID).members.forEach(function (guildMember) {
+				console.log(guildMember.user);
+			});
 				// If they have reacted to the poll with id = message_id
 					// Find the latest reaction on that message by that user that is within the pool of possible reactions
 					// Remove all other reactions on that message by that user that are within the pool of possible reactions
@@ -93,9 +101,6 @@ function updatePoll(message_id) {
 		console.error(err)
 		
 	}
-	
-	// Otherwise
-
 }
 
 // Whenever a user types a message
