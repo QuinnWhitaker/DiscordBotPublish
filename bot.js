@@ -17,7 +17,7 @@ const memberID = '677562715799027713';
 const voteCommand = '!vote1 ';
 
 // What does it say next to someone's name when they haven't voted?
-const noVote = 'Vote Pending';
+const noVote = 'No Vote';
 
 // Declare the list of all thumbs up and thumbs down votes
 const yesNoVotes = [
@@ -72,18 +72,41 @@ function updatePoll(message) {
 			const possible_reactions = this_poll.possibleVotes;
 			
 			// Declare dictionary and status variables, to eventually replace those in the JSON
-			var newVoteDictionary = "";
+			var newVoteDictionary = {};
 			var newVoteStatus = "";
 			
 			// For each user with the Member class
 			message.guild.roles.resolve(memberID).members.forEach(function (guildMember) {
 				console.log(guildMember.user);
-			});
-				// If they have reacted to the poll with id = message_id
+				
+				const user = guildMember.user;
+				
+				var userReacted = false;
+				
+				// See if that user has reacted to this message (For now, assume NO)
+				
+				// For each messageReaction in the ReactionManager of this message
+				/*
+				message.reactions.cache.forEach(function (messageReaction) {
+					// If the list of possibleReactions includes the name of the emoji of this messageReaction
+						// If this user exists within the users cache of this MessageReaction
+							// Return true
+					
+				});
+				*/
+					
+				
+				// If they have reacted to the poll
+				if (userReacted) {
 					// Find the latest reaction on that message by that user that is within the pool of possible reactions
 					// Remove all other reactions on that message by that user that are within the pool of possible reactions
 					// Update newVoteDictionary with key = [that user] to value = [that reaction]
-				// Otherwise, update newVoteDictionary with key = [that user] to value = null
+				} else {
+					// update newVoteDictionary with key = [that user] to value = noVote
+					newVoteDictionary[user] = noVote;
+				}
+			});
+				
 				
 			// Determine whether the vote needs to be closed.
 			// If the vote is NOT multipleChoice
