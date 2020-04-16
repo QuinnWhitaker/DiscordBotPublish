@@ -142,6 +142,18 @@ function updatePoll(message) {
 				console.error(err)
 			
 			}
+			
+			// Update the poll message content with the new information
+			
+			try {
+				
+				message.edit(formatPollString(this_poll.voteTitle, this_poll.issuedBy, this_poll.voteStatus, this_poll.possibleVotes, this_poll.voteDictionary));
+				
+			} catch (err) {
+				
+				console.error(err)
+			
+			}
 		}
 		
 	// If the JSON doesn't exist
@@ -185,10 +197,8 @@ client.on('message', message => {
 		
 		var voteDictionary = {};
 		
-		var sendString = formatPollString(voteTitle, issuedBy, voteStatus, voteDictionary);
-		
 		// Attempt to send the sendString message to the active vote channel 
-		let promisedMessage = client.channels.resolve(voteChannelId).send(sendString);
+		let promisedMessage = client.channels.resolve(voteChannelId).send("");
 			
 		promisedMessage.then(
 
