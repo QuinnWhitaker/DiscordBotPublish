@@ -21,18 +21,18 @@ const noVote = 'No Vote';
 
 // Declare the list of all thumbs up and thumbs down votes
 const yesNoVotes = {
-	[':thumbsup:', 'Yay'],
-	[':thumbsup_tone1:', 'Yay'],
-	[':thumbsup_tone2:', 'Yay'],
-	[':thumbsup_tone3:', 'Yay'],
-	[':thumbsup_tone4:', 'Yay'],
-	[':thumbsup_tone5:', 'Yay'],
-	[':thumbsdown:', 'Nay'],
-	[':thumbsdown_tone1:', 'Nay'],
-	[':thumbsdown_tone2:', 'Nay'],
-	[':thumbsdown_tone3:', 'Nay'],
-	[':thumbsdown_tone4:', 'Nay'],
-	[':thumbsdown_tone5:', 'Nay']
+	':thumbsup:': 			'Yay',
+	':thumbsup_tone1:': 	'Yay',
+	':thumbsup_tone2:': 	'Yay',
+	':thumbsup_tone3:': 	'Yay',
+	':thumbsup_tone4:': 	'Yay',
+	':thumbsup_tone5:': 	'Yay',
+	':thumbsdown:': 		'Nay',
+	':thumbsdown_tone1:': 	'Nay',
+	':thumbsdown_tone2:': 	'Nay',
+	':thumbsdown_tone3:': 	'Nay',
+	':thumbsdown_tone4:': 	'Nay',
+	':thumbsdown_tone5:': 	'Nay'
 };
 
 
