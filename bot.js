@@ -19,6 +19,21 @@ const voteCommand = '!vote1 ';
 // What does it say next to someone's name when they haven't voted?
 const noVote = 'No Vote';
 
+const thumbsup = 👍;
+const thumbsup_tone1 = 👍🏻;
+const thumbsup_tone2 = 👍🏼;
+const thumbsup_tone3 = 👍🏽;
+const thumbsup_tone4 = 👍🏾;
+const thumbsup_tone5 = 👍🏿;
+
+const thumbsdown = 👎;
+const thumbsdown_tone1 = 👎🏻;
+const thumbsdown_tone2 = 👎🏼;
+const thumbsdown_tone3 = 👎🏽;
+const thumbsdown_tone4 = 👎🏾;
+const thumbsdown_tone5 = 👎🏿;
+
+
 
 // When the bot is ready 
 client.on('ready', () => {
@@ -193,7 +208,7 @@ function addCollector(message) {
 				console.log('reaction.emoji: ', reaction.emoji);
 
 				// If the user is not a bot and the reaction is included in the list of approved reactions, the filter will approve of the reaction.
-				if ((!user.bot) /*&& (reaction.emoji.name in possible_reactions)*/) {
+				if ((!user.bot) && (reaction.emoji.name in possible_reactions)) {
 					
 					return true;
 					
