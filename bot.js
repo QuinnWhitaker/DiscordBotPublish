@@ -196,7 +196,7 @@ function addCollector(message) {
 				console.log('reaction.emoji.createdAt: ', reaction.emoji.createdAt);
 
 				// If the user is not a bot and the reaction is included in the list of approved reactions, the filter will approve of the reaction.
-				if ((!user.bot) && (reaction.emoji.name in possible_reactions)) {
+				if ((!user.bot) /*&& (reaction.emoji.name in possible_reactions)*/) {
 					
 					return true;
 					
@@ -210,7 +210,7 @@ function addCollector(message) {
 			// Whenever the collector receives an approved reaction
 			collector.on('collect', (reaction) => {
 				
-				console.log('Using on collect...');
+				console.log('On collect called');
 				console.log('reaction.emoji.name: ', reaction.emoji.name);
 				
 				// Remove all other reactions from that user that exist in possibleReactions
