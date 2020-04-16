@@ -44,12 +44,29 @@ function formatPollString(vote_title, issued_by, vote_status, vote_dictionary) {
 	
 	var poll = 	'==== **VOTE: ' + vote_title 	+ '** ==== \n\n **Issued By:** ' 	+ issued_by + '\n' 
 	poll += 	'\n**Status: ' 	+ vote_status 	+ '**\n\n'
-	return poll
+	
+	return poll;
 }
 
 function updatePoll(message_id) {
 	
 	// Find the JSON file associated with the message_id
+	const fs = require('fs')
+
+	const path = '.\\votes\\' + message_id + '.json'
+
+	try {
+		
+		if (fs.existsSync(path)) {
+			
+			console.log(path, " exists!");
+		
+		}
+	} catch(err) {
+		
+		console.error(err)
+		
+	}
 	// If it doesn't exist, throw an error and return
 	
 	// Otherwise
