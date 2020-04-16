@@ -181,11 +181,13 @@ function addCollector(message) {
 			// Get the pool of possible reactions from the JSON file
 			const possible_reactions = this_poll.possibleVotes;
 			
+			console.log(possible_reactions);
+			
 			// Whenever a user reacts to the message
 			const filter = (reaction, user) => {
 				
 				// If the user is not a bot and the reaction is included in the list of approved reactions, the filter will approve of the reaction.
-				if ((!user.bot) && (possible_reactions.includes(reaction.emoji.name))) {
+				if ((!user.bot) && (possible_reactions.has(reaction.emoji.name))) {
 					
 					return true;
 					
