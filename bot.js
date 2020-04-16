@@ -17,7 +17,7 @@ const voteCommand = '!vote1 ';
 const noVote = 'Vote Pending';
 
 // Declare the list of all thumbs up and thumbs down votes
-const yesNoVotes = {
+const yesNoVotes = [
 	':thumbsup:',
 	':thumbsup_tone1:',
 	':thumbsup_tone2:',
@@ -30,7 +30,7 @@ const yesNoVotes = {
 	':thumbsdown_tone3:',
 	':thumbsdown_tone4:',
 	':thumbsdown_tone5:',
-}
+];
 
 
 // When the bot is ready 
