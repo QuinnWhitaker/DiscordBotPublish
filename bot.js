@@ -51,12 +51,12 @@ function formatPollString(vote_title, issued_by, vote_status, vote_dictionary) {
 	return poll;
 }
 
-function updatePoll(message_id) {
+function updatePoll(message) {
 	
 	// Find the JSON file associated with the message_id
 	const fs = require('fs')
 
-	const path = '.\\votes\\' + message_id + '.json'
+	const path = '.\\votes\\' + message.id + '.json'
 
 	try {
 		
@@ -193,7 +193,7 @@ client.on('message', message => {
 				}
 				
 				// Update the poll with the current vote status.
-				updatePoll(messageID);
+				updatePoll(resultingMessage);
 				
 			}, rejectionReason => {
 				// If the message failed to send
