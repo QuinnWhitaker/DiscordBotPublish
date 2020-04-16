@@ -210,7 +210,7 @@ function addCollector(message) {
 			}
 			
 			// Create a reaction collector variable with the above filter.
-			const collector = resultingMessage.createReactionCollector(filter);
+			const collector = message.createReactionCollector(filter);
 			
 			// Whenever the collector receives an approved reaction
 			collector.on('collect', (reaction, user) => {
@@ -333,7 +333,7 @@ client.on('message', message => {
 				updatePoll(resultingMessage);
 				
 				// Add the Collector for this message (future runs of the program will instead add the collector on ready)
-				addCollector(resultingMessage)
+				addCollector(resultingMessage);
 				
 			}, rejectionReason => {
 				// If the message failed to send
