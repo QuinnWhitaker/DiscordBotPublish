@@ -45,7 +45,7 @@ client.on('ready', () => {
 
 function formatPollString(vote_title, issued_by, vote_status, multiple_choice, possible_votes, vote_dictionary) {
 	
-	var poll = 	'==== **" ' + vote_title 	+ ' "**Issued By:** ' 	+ issued_by + '\n\n' 
+	var poll = 	'==== **" ' + vote_title 	+ ' " ====\n\n**Issued By:** ' 	+ issued_by + '\n\n' 
 	poll +=		'**== Options ==** \n'
 	poll += '*(React to this message with one of the following emojis.)*\n\n'
 	
