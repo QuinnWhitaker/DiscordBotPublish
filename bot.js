@@ -43,12 +43,12 @@ client.on('ready', () => {
   
 });
 
-function formatPollString(vote_title, issued_by, vote_status, multipleChoice, possible_votes, vote_dictionary) {
+function formatPollString(vote_title, issued_by, vote_status, multiple_choice, possible_votes, vote_dictionary) {
 	
 	var poll = 	'==== **VOTE: ' + vote_title 	+ '** ==== \n\n **Issued By:** ' 	+ issued_by + '\n\n' 
 	poll +=		'OPTIONS: (React to this message with one of the following emojis)\n'
 	
-	if (multipleChoice) {
+	if (multiple_choice) {
 		
 	} else {
 		
@@ -56,9 +56,13 @@ function formatPollString(vote_title, issued_by, vote_status, multipleChoice, po
 		poll += ':thumbsdown: : Nay\n\n'
 		
 		poll += 'CURRENT VOTES: \n'
-		vote_dictionary.forEach( function(vote, member) {
+		
+		console.log(vote_dictionary);
+		/*vote_dictionary.forEach( function(vote, member) {
+			
 			poll += member.toString() + ' : ' + vote + '\n';
-		});
+			
+		});*/
 	}
 	
 	poll += 	'\n**Status: ' 	+ vote_status 	+ '**\n\n'
