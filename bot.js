@@ -71,13 +71,11 @@ function updatePoll(message) {
 			// Get the pool of possible reactions from the JSON file
 			const possible_reactions = this_poll.possibleVotes;
 			
-			// Declare dictionary and status variables, to eventually replace those in the JSON
+			// Declare dictionary variable, to eventually replace that in the JSON
 			var newVoteDictionary = {};
-			var newVoteStatus = "";
 			
 			// For each user with the Member class
 			message.guild.roles.resolve(memberID).members.forEach(function (guildMember) {
-				console.log(guildMember.user);
 				
 				const user = guildMember.user;
 				
@@ -114,8 +112,23 @@ function updatePoll(message) {
 			// Otherwise count the number of each unique reaction in the poll (from the pool of possible reactions)
 			// If all votes of one type exceed the other by more than 50%, OR every possible voter has voted, close the poll by setting the newVoteStatus
 			
-			// Update the JSON file with the newVoteDictionary and newVoteStatus			
-		
+			// Update the JSON file with the newVoteDictionary and newVoteStatus
+
+			this_poll.voteDictionary = newVoteDictionary;
+			
+			console.log(this_poll);
+			
+			var json = JSON.stringify(this_poll);
+
+			try {
+				
+				fs.writeFileSync(path, json);
+				
+			} catch (err) {
+				
+				console.error(err)
+			
+			}
 		}
 		
 	// If the JSON doesn't exist
@@ -198,8 +211,6 @@ client.on('message', message => {
 				var data = new JsonMessage();
 				
 				var json = JSON.stringify(data);
-				
-				console.log(json);	
 				
 				var path = '.\\votes\\' + messageID + '.json'
 				
