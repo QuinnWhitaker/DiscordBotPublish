@@ -204,7 +204,7 @@ function addCollector(message) {
 			const collector = message.createReactionCollector(filter);
 			
 			// Whenever the collector receives an approved reaction
-			collector.on('collect', (reaction, user) => {
+			collector.on('collect', (reaction) => {
 				
 				console.log('Using on collect...');
 				console.log('reaction.emoji.name: ', reaction.emoji.name);
