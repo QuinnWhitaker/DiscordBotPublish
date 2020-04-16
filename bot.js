@@ -46,17 +46,18 @@ client.on('ready', () => {
 function formatPollString(vote_title, issued_by, vote_status, multiple_choice, possible_votes, vote_dictionary) {
 	
 	var poll = 	'==== **POLL: ' + vote_title 	+ '** ==== \n\n **Issued By:** ' 	+ issued_by + '\n\n' 
-	poll +=		'**Options:** \n'
+	poll +=		'**== Options ==** \n'
+	poll += '*(React to this message with one of the following emojis.)*\n\n'
 	
 	if (multiple_choice) {
 		
 	} else {
 		
 		poll += ':thumbsup: : Yay\n\n'
-		poll += ':thumbsdown: : Nay\n'
-		poll += '*(React to this message with one of the following emojis.)*'
+		poll += ':thumbsdown: : Nay\n\n'
 		
-		poll += '**Current Votes:** \n'
+		
+		poll += '**== Current Votes ==** \n'
 		
 		console.log(vote_dictionary);
 		for (var member in vote_dictionary) {
