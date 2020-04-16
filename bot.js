@@ -20,20 +20,20 @@ const voteCommand = '!vote1 ';
 const noVote = 'No Vote';
 
 // Declare the list of all thumbs up and thumbs down votes
-const yesNoVotes = [
-	':thumbsup:',
-	':thumbsup_tone1:',
-	':thumbsup_tone2:',
-	':thumbsup_tone3:',
-	':thumbsup_tone4:',
-	':thumbsup_tone5:',
-	':thumbsdown:',
-	':thumbsdown_tone1:',
-	':thumbsdown_tone2:',
-	':thumbsdown_tone3:',
-	':thumbsdown_tone4:',
-	':thumbsdown_tone5:',
-];
+const yesNoVotes = {
+	[':thumbsup:', 'Yay'],
+	[':thumbsup_tone1:', 'Yay'],
+	[':thumbsup_tone2:', 'Yay'],
+	[':thumbsup_tone3:', 'Yay'],
+	[':thumbsup_tone4:', 'Yay'],
+	[':thumbsup_tone5:', 'Yay'],
+	[':thumbsdown:', 'Nay'],
+	[':thumbsdown_tone1:', 'Nay'],
+	[':thumbsdown_tone2:', 'Nay'],
+	[':thumbsdown_tone3:', 'Nay'],
+	[':thumbsdown_tone4:', 'Nay'],
+	[':thumbsdown_tone5:', 'Nay']
+};
 
 
 // When the bot is ready 
@@ -43,9 +43,22 @@ client.on('ready', () => {
   
 });
 
-function formatPollString(vote_title, issued_by, vote_status, vote_dictionary) {
+function formatPollString(vote_title, issued_by, vote_status, possible_votes, vote_dictionary) {
 	
-	var poll = 	'==== **VOTE: ' + vote_title 	+ '** ==== \n\n **Issued By:** ' 	+ issued_by + '\n' 
+	var poll = 	'==== **VOTE: ' + vote_title 	+ '** ==== \n\n **Issued By:** ' 	+ issued_by + '\n\n' 
+	poll +=		'OPTIONS: (React to this message with one of the following emojis)\n'
+	
+	if (possible_votes === yesNoVotes) {
+		
+		poll += ':thumbsup: : Yay\n'
+		poll += ':thumbsdown: : Nay\n\n'
+		
+		poll += 'CURRENT VOTES: \n'
+		vote_dictionary.forEach( function(vote, member) {
+			poll += member.toString() + ' : ' + vote + '\n';
+		});
+	}
+	
 	poll += 	'\n**Status: ' 	+ vote_status 	+ '**\n\n'
 	
 	return poll;
