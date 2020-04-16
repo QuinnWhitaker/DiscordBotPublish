@@ -206,7 +206,7 @@ client.on('message', message => {
 		var voteDictionary = {};
 		
 		// Attempt to send the sendString message to the active vote channel 
-		let promisedMessage = client.channels.resolve(voteChannelId).send('.');
+		let promisedMessage = client.channels.resolve(voteChannelId).send(voteTitle);
 			
 		promisedMessage.then(
 
