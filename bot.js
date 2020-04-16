@@ -57,37 +57,45 @@ function updatePoll(message_id) {
 
 	try {
 		
+		// If the JSON exists
 		if (fs.existsSync(path)) {
 			
-			console.log(path, " exists!");
+			// Get the pool of possible reactions from the JSON file
+
+			let rawdata = fs.readFileSync(path);
+			let this_poll = JSON.parse(rawdata);
+			console.log(this_poll);
+			
+			// const possible_reactions = 
+			
+			// Declare newVoteDictionary and newVoteStatus variables
+			
+			// For each user with the Member class
+				// If they have reacted to the poll with id = message_id
+					// Find the latest reaction on that message by that user that is within the pool of possible reactions
+					// Remove all other reactions on that message by that user that are within the pool of possible reactions
+					// Update newVoteDictionary with key = [that user] to value = [that reaction]
+				// Otherwise, update newVoteDictionary with key = [that user] to value = null
+				
+			// Determine whether the vote needs to be closed.
+			// If the vote is NOT multipleChoice
+				// Count the number of thumbs up symbols (of all types) as well as thumbs down symbols in the newVoteDictionary
+			// Otherwise count the number of each unique reaction in the poll (from the pool of possible reactions)
+			// If all votes of one type exceed the other by more than 50%, OR every possible voter has voted, close the poll by setting the newVoteStatus
+			
+			// Update the JSON file with the newVoteDictionary and newVoteStatus			
 		
 		}
+		
+	// If the JSON doesn't exist
 	} catch(err) {
 		
 		console.error(err)
 		
 	}
-	// If it doesn't exist, throw an error and return
 	
 	// Otherwise
-		// Get the pool of possible reactions from the JSON file
-		
-		// Declare newVoteDictionary and newVoteStatus variables
-		
-		// For each user with the Member class
-			// If they have reacted to the poll with id = message_id
-				// Find the latest reaction on that message by that user that is within the pool of possible reactions
-				// Remove all other reactions on that message by that user that are within the pool of possible reactions
-				// Update newVoteDictionary with key = [that user] to value = [that reaction]
-			// Otherwise, update newVoteDictionary with key = [that user] to value = null
-			
-		// Determine whether the vote needs to be closed.
-		// If the vote is NOT multipleChoice
-			// Count the number of thumbs up symbols (of all types) as well as thumbs down symbols in the newVoteDictionary
-		// Otherwise count the number of each unique reaction in the poll (from the pool of possible reactions)
-		// If all votes of one type exceed the other by more than 50%, OR every possible voter has voted, close the poll by setting the newVoteStatus
-		
-		// Update the JSON file with the newVoteDictionary and newVoteStatus
+
 }
 
 // Whenever a user types a message
