@@ -53,8 +53,8 @@ function formatPollString(vote_title, issued_by, vote_status, multiple_choice, p
 		
 	} else {
 		
-		poll += ':thumbsup: : Yay\n\n'
-		poll += ':thumbsdown: : Nay\n\n'
+		poll += thumbsup + ' : Yay\n\n'
+		poll += thumbsdown + ' : Nay\n\n'
 		
 		
 		poll += '**== Current Votes ==** \n'
@@ -275,18 +275,18 @@ client.on('message', message => {
 		} else {
 			// Set the list of possible votes to thumbs up and thumbs down
 			
-			possibleVotes[':thumbsup:'] = 'Yay';
-			possibleVotes[':thumbsup_tone1:'] = 'Yay';
-			possibleVotes[':thumbsup_tone2:'] = 'Yay';
-			possibleVotes[':thumbsup_tone3:'] = 'Yay';
-			possibleVotes[':thumbsup_tone4:'] = 'Yay';
-			possibleVotes[':thumbsup_tone5:'] = 'Yay';
-			possibleVotes[':thumbsdown:'] = 'Nay';
-			possibleVotes[':thumbsdown_tone1:'] = 'Nay';
-			possibleVotes[':thumbsdown_tone2:'] = 'Nay';
-			possibleVotes[':thumbsdown_tone3:'] = 'Nay';
-			possibleVotes[':thumbsdown_tone4:'] = 'Nay';
-			possibleVotes[':thumbsdown_tone5:'] = 'Nay';
+			possibleVotes[thumbsup] = 'Yay';
+			possibleVotes[thumbsup_tone1] = 'Yay';
+			possibleVotes[thumbsup_tone2] = 'Yay';
+			possibleVotes[thumbsup_tone3] = 'Yay';
+			possibleVotes[thumbsup_tone4] = 'Yay';
+			possibleVotes[thumbsup_tone5] = 'Yay';
+			possibleVotes[thumbsdown] = 'Nay';
+			possibleVotes[thumbsdown_tone1] = 'Nay';
+			possibleVotes[thumbsdown_tone2] = 'Nay';
+			possibleVotes[thumbsdown_tone3] = 'Nay';
+			possibleVotes[thumbsdown_tone4] = 'Nay';
+			possibleVotes[thumbsdown_tone5] = 'Nay';
 
 		}
 		
