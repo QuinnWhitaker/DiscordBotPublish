@@ -189,7 +189,7 @@ function addCollector(message) {
 			const filter = (reaction, user) => {
 				
 				// If the user is not a bot and the reaction is included in the list of approved reactions, the filter will approve of the reaction.
-				if ((!user.bot) && (possible_reactions.has(reaction.emoji.name))) {
+				if ((!user.bot) && (reaction.emoji.name in possible_reactions)) {
 					
 					return true;
 					
@@ -247,7 +247,7 @@ client.on('message', message => {
 		const multipleChoice = false;
 		
 		// Declare the pool of possible votes.
-		var possibleVotes = new Map();
+		var possibleVotes = {};
 		
 		// If it is multiple choice
 		if (multipleChoice) {
@@ -255,20 +255,22 @@ client.on('message', message => {
 		} else {
 			// Set the list of possible votes to thumbs up and thumbs down
 			
-			possibleVotes.set(':thumbsup:', 'Yay');
-			possibleVotes.set(':thumbsup_tone1:', 'Yay');
-			possibleVotes.set(':thumbsup_tone2:', 'Yay');
-			possibleVotes.set(':thumbsup_tone3:', 'Yay');
-			possibleVotes.set(':thumbsup_tone4:', 'Yay');
-			possibleVotes.set(':thumbsup_tone5:', 'Yay');
-			possibleVotes.set(':thumbsdown:', 'Nay');
-			possibleVotes.set(':thumbsdown_tone1:', 'Nay');
-			possibleVotes.set(':thumbsdown_tone2:', 'Nay');
-			possibleVotes.set(':thumbsdown_tone3:', 'Nay');
-			possibleVotes.set(':thumbsdown_tone4:', 'Nay');
-			possibleVotes.set(':thumbsdown_tone5:', 'Nay');
+			possibleVotes[':thumbsup:'] = 'Yay';
+			possibleVotes[':thumbsup_tone1:'] = 'Yay';
+			possibleVotes[':thumbsup_tone2:'] = 'Yay';
+			possibleVotes[':thumbsup_tone3:'] = 'Yay';
+			possibleVotes[':thumbsup_tone4:'] = 'Yay';
+			possibleVotes[':thumbsup_tone5:'] = 'Yay';
+			possibleVotes[':thumbsdown:'] = 'Nay';
+			possibleVotes[':thumbsdown_tone1:'] = 'Nay';
+			possibleVotes[':thumbsdown_tone2:'] = 'Nay';
+			possibleVotes[':thumbsdown_tone3:'] = 'Nay';
+			possibleVotes[':thumbsdown_tone4:'] = 'Nay';
+			possibleVotes[':thumbsdown_tone5:'] = 'Nay';
 
 		}
+		
+		console.log('possibleVotes: ', possibleVotes);
 		
 		// Get the author of the message
 		const issuedBy = message.author.toString();
@@ -299,6 +301,8 @@ client.on('message', message => {
 					this.multipleChoice = multipleChoice;
 					
 					this.possibleVotes = possibleVotes;
+					
+					console.log('this.possibleVotes: ', this.possibleVotes);
 					
 					this.voteTitle = voteTitle;
 					
