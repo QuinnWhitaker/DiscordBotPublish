@@ -178,6 +178,8 @@ function addCollector(message) {
 			let rawdata = fs.readFileSync(path);
 			let this_poll = JSON.parse(rawdata);
 			
+			console.log(this_poll);
+			
 			// Get the pool of possible reactions from the JSON file
 			const possible_reactions = this_poll.possibleVotes;
 			
