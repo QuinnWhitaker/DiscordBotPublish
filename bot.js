@@ -31,6 +31,10 @@ const thumbsdown_tone3 = '👎' + '🏽'
 const thumbsdown_tone4 = '👎' + '🏾'
 const thumbsdown_tone5 = '👎' + '🏿'
 
+// Text for Yes No Votes
+const yesVote = 'Yay';
+const noVote = 'Nay';
+
 // What does it say next to someone's name when they haven't voted?
 const noVote = 'No Vote';
 
@@ -53,7 +57,7 @@ client.on('ready', () => {
   
 });
 
-function formatPollString(vote_title, issued_by, vote_status, multiple_choice, possible_votes, vote_dictionary) {
+function formatPollString(vote_title, issued_by, vote_status, multiple_choice, possible_reactions, vote_dictionary) {
 	// This function takes in all the relevant information of a poll and generates a string for the message content to be updated as
 	
 	var poll = 	'==== **" ' + vote_title 	+ ' **" ====\n\n**Issued By:** ' 	+ issued_by + '\n\n' 
@@ -64,8 +68,8 @@ function formatPollString(vote_title, issued_by, vote_status, multiple_choice, p
 		
 	} else {
 		
-		poll += ':thumbsup: : Yay\n\n'
-		poll += ':thumbsdown: : Nay\n\n'
+		poll += ':thumbsup: : ' + yesVote + '\n\n'
+		poll += ':thumbsdown: : ' + noVote + '\n\n'
 		
 		
 		poll += '**== Current Votes ==** \n'
@@ -106,7 +110,7 @@ function updatePoll(message) {
 			let this_poll = JSON.parse(rawdata);
 			
 			// Get the pool of possible reactions from the JSON file
-			const possible_reactions = this_poll.possibleVotes;
+			const possible_reactions = this_poll.possibleReactions;
 			
 			// Declare dictionary variable, to eventually replace that in the JSON
 			var newVoteDictionary = {};
@@ -119,7 +123,7 @@ function updatePoll(message) {
 				var userReacted = false;
 				var theirReaction = null;
 				
-				// See if that user has reacted to this message with a reaction from the possible votes (For now, assume NO)
+				// See if that user has reacted to this message with a reaction from the possible reactions
 				
 				// For each reaction in the message
 				message.reactions.cache.forEach(function (iterated_reaction) {
@@ -135,26 +139,56 @@ function updatePoll(message) {
 							theirReaction = iterated_reaction.emoji.toString();
 						}
 
-						
 					}
 					
 				});
 
-				// If they have reacted to the poll
+				// If they have reacted to the poll with a valid reaction
 				if (userReacted) {
+					
 					// ! - Warning: The reaction collector should handle duplicate reactions. This block assumes that
-					// each user has at most one reaction from among the possible votes
+					// each user has at most one reaction from among the possible reactions
 					
 					// Update newVoteDictionary with key = [that user] to value = [the saved reaction]
 					newVoteDictionary[user] = theirReaction;
+					
 				} else {
+					
 					// update newVoteDictionary with key = [that user] to value = noVote
 					newVoteDictionary[user] = noVote;
+					
 				}
 			});
 				
 				
 			// Determine whether the vote needs to be closed.
+			
+			console.log('Total number of voters: ', Object.keys(newVoteDictionary).length);
+			
+			// Tally will become a map with key = the vote text and value = the number of users that made that vote
+			var tally = new Map();
+			
+			// For each possible reaction, if it has not yet been declared as key, declare it as one and set its value to 0.
+			for (let [pr_reaction, pr_text] of possible_reactions) {
+				
+				if (!tally.has(pr_text)) { 
+					tally[pr_text] = 0;
+				}
+				
+			}
+			
+			// For each vote in voteDictionary
+			
+			for (let [nvd_user, nvd_reaction] of newVoteDictionary) {
+				
+				if (!tally.has(possible_reactions[nvd_reaction])) { 
+					tally[v]++;
+				}
+				
+			}
+			
+			console.log(tally);
+			
 			// If the vote is NOT multipleChoice
 				// Count the number of thumbs up symbols (of all types) as well as thumbs down symbols in the newVoteDictionary
 			// Otherwise count the number of each unique reaction in the poll (from the pool of possible reactions)
@@ -180,7 +214,7 @@ function updatePoll(message) {
 			
 			try {
 				
-				message.edit(formatPollString(this_poll.voteTitle, this_poll.issuedBy, this_poll.voteStatus, this_poll.multipleChoice, this_poll.possibleVotes, this_poll.voteDictionary));
+				message.edit(formatPollString(this_poll.voteTitle, this_poll.issuedBy, this_poll.voteStatus, this_poll.multipleChoice, this_poll.possibleReactions, this_poll.voteDictionary));
 				
 			} catch (err) {
 				
@@ -216,7 +250,7 @@ function addCollector(message) {
 			let this_poll = JSON.parse(rawdata);
 			
 			// Get the pool of possible reactions from the JSON file
-			const possible_reactions = this_poll.possibleVotes;
+			const possible_reactions = this_poll.possibleReactions;
 			
 			
 			// Whenever a user reacts to the message
@@ -317,27 +351,27 @@ client.on('message', message => {
 		
 		const multipleChoice = false;
 		
-		// Declare the pool of possible votes.
-		var possibleVotes = {};
+		// Declare the pool of possible reactions.
+		var possibleReactions = {};
 		
 		// If it is multiple choice
 		if (multipleChoice) {
 			// Grab each possible vote from the postPreFix
 		} else {
-			// Set the list of possible votes to thumbs up and thumbs down
+			// Set the list of possible Reactions to thumbs up and thumbs down
 			
-			possibleVotes[thumbsup] = 'Yay';
-			possibleVotes[thumbsup_tone1] = 'Yay';
-			possibleVotes[thumbsup_tone2] = 'Yay';
-			possibleVotes[thumbsup_tone3] = 'Yay';
-			possibleVotes[thumbsup_tone4] = 'Yay';
-			possibleVotes[thumbsup_tone5] = 'Yay';
-			possibleVotes[thumbsdown] = 'Nay';
-			possibleVotes[thumbsdown_tone1] = 'Nay';
-			possibleVotes[thumbsdown_tone2] = 'Nay';
-			possibleVotes[thumbsdown_tone3] = 'Nay';
-			possibleVotes[thumbsdown_tone4] = 'Nay';
-			possibleVotes[thumbsdown_tone5] = 'Nay';
+			possibleReactions[thumbsup] = yesVote;
+			possibleReactions[thumbsup_tone1] = yesVote;
+			possibleReactions[thumbsup_tone2] = yesVote;
+			possibleReactions[thumbsup_tone3] = yesVote;
+			possibleReactions[thumbsup_tone4] = yesVote;
+			possibleReactions[thumbsup_tone5] = yesVote;
+			possibleReactions[thumbsdown] = noVote;
+			possibleReactions[thumbsdown_tone1] = noVote;
+			possibleReactions[thumbsdown_tone2] = noVote;
+			possibleReactions[thumbsdown_tone3] = noVote;
+			possibleReactions[thumbsdown_tone4] = noVote;
+			possibleReactions[thumbsdown_tone5] = noVote;
 
 		}
 	
@@ -370,7 +404,7 @@ client.on('message', message => {
 					
 					this.multipleChoice = multipleChoice;
 					
-					this.possibleVotes = possibleVotes;
+					this.possibleReactions = possibleReactions;
 					
 					this.voteTitle = voteTitle;
 					
