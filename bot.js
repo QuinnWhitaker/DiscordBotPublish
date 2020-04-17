@@ -219,7 +219,7 @@ function addCollector(message) {
 				
 				console.log('On collect called');
 				
-				console.log('reaction.emoji.toString() in possible_reactions ? ' (reaction.emoji.toString() in possible_reactions));
+				console.log('reaction.emoji.toString() in possible_reactions ? ', (reaction.emoji.toString() in possible_reactions));
 				
 				// Remove all other reactions from that user that exist in possibleReactions
 				
