@@ -167,10 +167,24 @@ function updatePoll(message) {
 			console.log('possible_reactions: ', possible_reactions);
 			console.log('newVoteDictionary: ', newVoteDictionary);
 			
+			var tally;
+			
 			for (var user in newVoteDictionary) {
 				const their_vote = newVoteDictionary[user];
 				
-				console.log('possible_reactions[their_vote] == null ?', possible_reactions[their_vote] == null);
+				// If their vote is defined in the possible_reactions dictionary
+				if (possible_reactions[their_vote] != null) {
+					
+					 if (tally[possible_reactions[their_vote]] == null) {
+						 
+						 tally[possible_reactions[their_vote]] = 0;
+						 
+					 } else {
+						 
+						 tally[possible_reactions[their_vote]]++;
+						 
+					 }
+				}
 			}
 			
 			// If the vote is NOT multipleChoice
