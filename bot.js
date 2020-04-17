@@ -127,8 +127,8 @@ function updatePoll(message) {
 					// If it is a valid reaction
 					if (iterated_reaction.emoji.toString() in possible_reactions) {
 						
-						// And ff the current user exists within that reaction's user list
-						if (findInMap(iterated_reaction.users, user)) {
+						// And if the current user exists within that reaction's user list
+						if (iterated_reaction.users.has(user)) {
 							
 							// We know the user reacted. Save the reaction to a variable.
 							userReacted = true;
