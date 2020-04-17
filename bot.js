@@ -187,6 +187,8 @@ function updatePoll(message) {
 				}
 			}
 			
+			console.log('tally: ', tally);
+			
 			// If the vote is NOT multipleChoice
 				// Count the number of thumbs up symbols (of all types) as well as thumbs down symbols in the newVoteDictionary
 			// Otherwise count the number of each unique reaction in the poll (from the pool of possible reactions)
