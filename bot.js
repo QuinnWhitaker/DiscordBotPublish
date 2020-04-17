@@ -181,19 +181,14 @@ function addCollector(message) {
 			let rawdata = fs.readFileSync(path);
 			let this_poll = JSON.parse(rawdata);
 			
-			console.log(this_poll);
-			
 			// Get the pool of possible reactions from the JSON file
 			const possible_reactions = this_poll.possibleVotes;
-			
-			console.log('possible_reactions: ', possible_reactions);
 			
 			// Whenever a user reacts to the message
 			const filter = (reaction, user) => {
 				
 				console.log('Using filter...');
-				console.log('reaction: ', reaction);
-				console.log('reaction.emoji: ', reaction.emoji);
+				console.log('reaction.emoji.toString(): ', reaction.emoji.toString());
 
 				// If the user is not a bot and the reaction is included in the list of approved reactions, the filter will approve of the reaction.
 				if ((!user.bot) /*&& (reaction.emoji.name in possible_reactions)*/) {
@@ -211,7 +206,6 @@ function addCollector(message) {
 			collector.on('collect', (reaction) => {
 				
 				console.log('On collect called');
-				console.log('reaction.emoji.name: ', reaction.emoji.name);
 				
 				// Remove all other reactions from that user that exist in possibleReactions
 				
@@ -277,8 +271,7 @@ client.on('message', message => {
 			possibleVotes[':thumbsdown_tone5:'] = 'Nay';
 
 		}
-		
-		console.log('possibleVotes: ', possibleVotes);
+	
 		
 		// Get the author of the message
 		const issuedBy = message.author.toString();
@@ -309,8 +302,6 @@ client.on('message', message => {
 					this.multipleChoice = multipleChoice;
 					
 					this.possibleVotes = possibleVotes;
-					
-					console.log('this.possibleVotes: ', this.possibleVotes);
 					
 					this.voteTitle = voteTitle;
 					
