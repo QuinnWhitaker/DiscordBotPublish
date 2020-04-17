@@ -231,7 +231,7 @@ function addCollector(message) {
 					// For each reaction in the message
 					message.reactions.cache.forEach(function (iterated_reaction) {
 						
-						console.log('messageReaction.emoji.toString(): ', messageReaction.emoji.toString());
+						console.log('iterated_reaction.emoji.toString(): ', iterated_reaction.emoji.toString());
 						
 						// If it is a valid reaction AND it is not the current reaction
 						if (iterated_reaction.emoji.toString() in possible_reactions && iterated_reaction != reaction) {
