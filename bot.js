@@ -32,11 +32,15 @@ const thumbsdown_tone4 = '👎' + '🏾'
 const thumbsdown_tone5 = '👎' + '🏿'
 
 // Text for Yes No Votes
-const yesVote = 'Yay';
-const noVote = 'Nay';
+const yesVote = 'Yes';
+const noVote = 'No';
 
 // What does it say next to someone's name when they haven't voted?
 const undecidedVote = 'No Vote';
+
+// Text for vote statuses
+const voteActive = '```diff \n + ACTIVE \n ```';
+const voteClosed = '```diff \n - CLOSED \n ```';
 
 // Function to determine whether a given map (or Collection) contains a given value
 const findInMap = (map, val) => {
@@ -163,50 +167,63 @@ function updatePoll(message) {
 				
 			// Determine whether the vote needs to be closed.
 			
-			console.log('Total number of voters: ', Object.keys(newVoteDictionary).length);
-			console.log('possible_reactions: ', possible_reactions);
-			console.log('newVoteDictionary: ', newVoteDictionary);
-			
+			// The tally dictionary will get filled with all the votes from each user, not discriminating from emoji skin tone.
 			var tally = {};
 			
-			// Fill up the tally with all possible votes
+			// For each reaction among the possible reactions
 			for (var pr_vote in possible_reactions) {
 				
+				// Declare the text associated with this reaction
 				const pr_text = possible_reactions[pr_vote];
 				
+				// If the tally hasn't begin counting the number of users that chose this vote
 				if (tally[pr_text] == null) {
 					 
+					// Start the count at 0
 					tally[pr_text] = 0;
 					 
 				}
 			}
 			
+			// For each user that can vote
 			for (var user in newVoteDictionary) {
+				
+				// Declare whether they have voted and what they voted for.
 				const their_vote = newVoteDictionary[user];
 				const their_text = possible_reactions[their_vote];
 				
-				// If their vote is defined in the possible_reactions dictionary
+				// If their vote has been declared
 				if (their_text != null) {
-
-					 if (tally[their_text] == null) {
+					
+					// If the tally hasn't began counting the number of users that chose this vote
+					if (tally[their_text] == null) {
 						 
+						 // Start the count at 1
 						 tally[their_text] = 1;
 						 
-					 } else {
+					} else {
+						// If the tally already begun counting the number of users that chose this vote
 						 
-						 tally[their_text]++;
+						// Increase that number by 1 
+						tally[their_text]++;
 						 
-					 }
+					}
 					 
 				}
 			}
 			
-			console.log('tally: ', tally);
+			function closeVote(result) {
+				this_poll.
+			}
 			
-			// If the vote is NOT multipleChoice
-				// Count the number of thumbs up symbols (of all types) as well as thumbs down symbols in the newVoteDictionary
-			// Otherwise count the number of each unique reaction in the poll (from the pool of possible reactions)
-			// If all votes of one type exceed the other by more than 50%, OR every possible voter has voted, close the poll by setting the newVoteStatus
+			console.log('tally: ', tally);
+			console.log('5/2=', 5/2);
+
+			const totalVoters = Object.keys(newVoteDictionary).length;
+			
+			for (var talliedVote in tally) {
+				
+			}
 			
 			// Update the JSON file with the newVoteDictionary and newVoteStatus
 
@@ -394,7 +411,7 @@ client.on('message', message => {
 		const issuedBy = message.author.toString();
 		
 		// Declare the status of the vote as ACTIVE
-		var voteStatus = 'ACTIVE';
+		var voteStatus = voteActive;
 		
 		var voteDictionary = {};
 		
