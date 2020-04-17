@@ -36,7 +36,7 @@ const yesVote = 'Yay';
 const noVote = 'Nay';
 
 // What does it say next to someone's name when they haven't voted?
-const noVote = 'No Vote';
+const undecidedVote = 'No Vote';
 
 // Function to determine whether a given map (or Collection) contains a given value
 const findInMap = (map, val) => {
@@ -154,8 +154,8 @@ function updatePoll(message) {
 					
 				} else {
 					
-					// update newVoteDictionary with key = [that user] to value = noVote
-					newVoteDictionary[user] = noVote;
+					// update newVoteDictionary with key = [that user] to value = undecidedVote
+					newVoteDictionary[user] = undecidedVote;
 					
 				}
 			});
