@@ -216,7 +216,7 @@ function addCollector(message) {
 			const collector = message.createReactionCollector(filter);
 			
 			// Whenever the collector receives an approved reaction
-			collector.on('collect', (reaction) => {
+			collector.on('collect', (reaction, user) => {
 				
 				console.log('On collect called');
 				
@@ -236,6 +236,7 @@ function addCollector(message) {
 						// If it is a valid reaction AND it is not the current reaction
 						if (iterated_reaction.emoji.toString() in possible_reactions && iterated_reaction != reaction) {
 							
+							// Remove that reaction
 							console.log('Deleting this reaction');
 							//iterated_reaction.users.remove(reactedUser);
 						}
