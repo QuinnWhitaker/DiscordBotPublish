@@ -17,7 +17,6 @@ const memberID = '677562715799027713';
 const voteCommand = '!vote1 ';
 
 // Global variables for each thumbs up and thumbs down emoji
-const thumbsup_tone5 = 👍🏿;
 
 // What does it say next to someone's name when they haven't voted?
 const noVote = 'No Vote';
