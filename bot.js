@@ -34,6 +34,17 @@ const thumbsdown_tone5 = '👎' + '🏿'
 // What does it say next to someone's name when they haven't voted?
 const noVote = 'No Vote';
 
+// Function to determine whether a given map (or Collection) contains a given value
+const findInMap = (map, val) => {
+	
+	for (let [k, v] of map) {
+		if (v === val) { 
+			return true; 
+		}
+	}  
+	return false;
+}
+
 
 // When the bot is ready 
 client.on('ready', () => {
@@ -117,7 +128,7 @@ function updatePoll(message) {
 					if (iterated_reaction.emoji.toString() in possible_reactions) {
 						
 						// And ff the current user exists within that reaction's user list
-						if (iterated_reaction.users.includes(user)) {
+						if (findInMap(iterated_reaction.users, user)) {
 							
 							// We know the user reacted. Save the reaction to a variable.
 							userReacted = true;
