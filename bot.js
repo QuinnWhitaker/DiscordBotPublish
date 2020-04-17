@@ -106,26 +106,35 @@ function updatePoll(message) {
 				const user = guildMember.user;
 				
 				var userReacted = false;
+				var theirReaction = null;
 				
 				// See if that user has reacted to this message with a reaction from the possible votes (For now, assume NO)
 				
-				// For each messageReaction in the ReactionManager of this message
-				/*
-				message.reactions.cache.forEach(function (messageReaction) {
-					// If the list of possibleReactions includes the name of the emoji of this messageReaction
-						// If this user exists within the users cache of this MessageReaction
-							// Return true
+				// For each reaction in the message
+				message.reactions.cache.forEach(function (iterated_reaction) {
+					
+					// If it is a valid reaction
+					if (iterated_reaction.emoji.toString() in possible_reactions) {
+						
+						// And ff the current user exists within that reaction's user list
+						if (iterated_reaction.users.includes(user)) {
+							
+							// We know the user reacted. Save the reaction to a variable.
+							userReacted = true;
+							theirReaction = iterated_reaction.emoji.toString();
+						}
+						
+					}
 					
 				});
-				*/
-					
-				
+
 				// If they have reacted to the poll
 				if (userReacted) {
 					// ! - Warning: The reaction collector should handle duplicate reactions. This block assumes that
 					// each user has at most one reaction from among the possible votes
 					
-					// Update newVoteDictionary with key = [that user] to value = [that reaction]
+					// Update newVoteDictionary with key = [that user] to value = [the saved reaction]
+					newVoteDictionary[user] = theirReaction;
 				} else {
 					// update newVoteDictionary with key = [that user] to value = noVote
 					newVoteDictionary[user] = noVote;
@@ -178,6 +187,7 @@ function updatePoll(message) {
 
 function addCollector(message) {
 	// This function takes a poll and adds a collector to await reactions from users
+	// When users react, it deletes all other valid reactions from that user, then updates the poll
 	
 	// Find the JSON file associated with the message_id
 	const fs = require('fs')
@@ -228,6 +238,10 @@ function addCollector(message) {
 					
 					// Remove all other valid reactions from that user
 					
+					// Whether all other reactions were deleted if they existed.
+					// If they were not deleted successfully, we should NOT update the poll.
+					var deletedSuccessfully  = true;
+					
 					// For each reaction in the message
 					message.reactions.cache.forEach(function (iterated_reaction) {
 						
@@ -238,20 +252,33 @@ function addCollector(message) {
 							
 							// Remove that reaction
 							console.log('Deleting this reaction');
-							iterated_reaction.users.remove(user);
+							
+							
+							try {
+								
+								iterated_reaction.users.remove(user);
+								
+							} 	catch(err) {
+		
+								console.error(err);
+								deletedSuccessfully =  false;
+		
+							}
+							
 						}
 						
 						
 					});
 					
-					// update the poll
-					
+					if (deletedSuccessfully) {
+						
+						// Update the poll
+						updatePoll(message);
+						
+					}	
+
 				}
 					
-				
-				
-				
-
 			});
 			
 		}
