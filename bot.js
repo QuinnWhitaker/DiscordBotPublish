@@ -238,7 +238,7 @@ function addCollector(message) {
 							
 							// Remove that reaction
 							console.log('Deleting this reaction');
-							//iterated_reaction.users.remove(reactedUser);
+							iterated_reaction.users.remove(user);
 						}
 						
 						
