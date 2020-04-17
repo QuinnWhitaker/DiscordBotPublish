@@ -168,7 +168,7 @@ function updatePoll(message) {
 			console.log('newVoteDictionary: ', newVoteDictionary);
 			
 			for (var user in newVoteDictionary) {
-				const their_vote = newVoteDictionary[key];
+				const their_vote = newVoteDictionary[user];
 				
 				console.log('possible_reactions[their_vote] == null ?', possible_reactions[their_vote] == null);
 			}
