@@ -17,7 +17,19 @@ const memberID = '677562715799027713';
 const voteCommand = '!vote1 ';
 
 // Global variables for each thumbs up and thumbs down emoji
+const thumbsup = '👍'
+const thumbsup_tone1 = '👍' + '🏻'
+const thumbsup_tone2 = '👍' + '🏼'
+const thumbsup_tone3 = '👍' + '🏽'
+const thumbsup_tone4 = '👍' + '🏾'
 const thumbsup_tone5 = '👍' + '🏿'
+
+const thumbsdown = '👎'
+const thumbsdown_tone1 = '👎' + '🏻'
+const thumbsdown_tone2 = '👎' + '🏼'
+const thumbsdown_tone3 = '👎' + '🏽'
+const thumbsdown_tone4 = '👎' + '🏾'
+const thumbsdown_tone5 = '👎' + '🏿'
 
 // What does it say next to someone's name when they haven't voted?
 const noVote = 'No Vote';
