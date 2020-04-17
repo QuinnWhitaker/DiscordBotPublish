@@ -39,8 +39,8 @@ const noVote = 'No';
 const undecidedVote = 'No Vote';
 
 // Text for vote statuses
-const voteActive = '```diff \n + ACTIVE \n ```';
-const voteClosed = '```diff \n - CLOSED \n ```';
+const voteActive = '```diff + ACTIVE ```';
+const voteClosed = '```diff - CLOSED ```';
 
 // Function to determine whether a given map (or Collection) contains a given value
 const findInMap = (map, val) => {
