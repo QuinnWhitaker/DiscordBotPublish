@@ -471,7 +471,7 @@ client.on('message', message => {
 });
 
 client.on('messageReactionRemove', (reaction, user) => {
-	console.log('reaction: ', reaction);
+	updatePoll(reaction.message);
 });
 
 // Log our bot in using the token from https://discordapp.com/developers/applications/me
