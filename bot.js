@@ -213,7 +213,7 @@ function updatePoll(message) {
 			}
 			
 			function closeVote(result) {
-				this_poll.
+
 			}
 			
 			console.log('tally: ', tally);
