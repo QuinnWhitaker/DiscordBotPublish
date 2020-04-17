@@ -215,6 +215,7 @@ function addCollector(message) {
 					console.log('messageReaction.emoji.name: ', messageReaction.emoji.name);
 					console.log('messageReaction.emoji.toString(): ', messageReaction.emoji.toString());
 					console.log('thumbsup_tone5: ', thumbsup_tone5);
+					console.log('messageReaction.emoji.toString() == thumbsup_tone5?', messageReaction.emoji.toString() == thumbsup_tone5);
 					// If the list of possibleReactions includes the name of the emoji of this messageReaction
 					
 				});
