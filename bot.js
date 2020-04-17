@@ -202,8 +202,8 @@ function addCollector(message) {
 				console.log('Using filter...');
 				console.log('reaction.emoji.toString(): ', reaction.emoji.toString());
 
-				// If the user is not a bot and the reaction is included in the list of approved reactions, the filter will approve of the reaction.
-				if ((!user.bot) && (reaction.emoji.toString() in possible_reactions)) {
+				// If the user is not a bot, the filter will approve of the reaction.
+				if (!user.bot) {
 					
 					return true;
 					
@@ -219,15 +219,17 @@ function addCollector(message) {
 				
 				console.log('On collect called');
 				
+				console.log('reaction.emoji.toString() in possible_reactions ? ' (reaction.emoji.toString() in possible_reactions));
+				
 				// Remove all other reactions from that user that exist in possibleReactions
 				
 				// For each messageReaction in the ReactionManager of the message
-				message.reactions.cache.forEach(function (messageReaction) {
+				/*message.reactions.cache.forEach(function (messageReaction) {
 					
 					console.log('messageReaction.emoji.toString(): ', messageReaction.emoji.toString());
 					// If the list of possibleReactions includes the string of the emoji of this messageReaction
 					
-				});
+				});*/
 				
 				// update the poll
 				
