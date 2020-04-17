@@ -184,6 +184,8 @@ function updatePoll(message) {
 				}
 			}
 			
+			console.log('newVoteDictionary: ', newVoteDictionary);
+			
 			// For each user/reaction pair in voteDictionary
 			for (var nvd_user in newVoteDictionary) {
 				
