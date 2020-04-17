@@ -217,7 +217,7 @@ function updatePoll(message) {
 			}
 			
 			console.log('tally: ', tally);
-			console.log('5/2=', 5/2);
+			console.log('Math.round(5/2)=', Math.round(5/2));
 
 			const totalVoters = Object.keys(newVoteDictionary).length;
 			
