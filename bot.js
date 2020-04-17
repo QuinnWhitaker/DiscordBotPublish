@@ -164,43 +164,8 @@ function updatePoll(message) {
 			// Determine whether the vote needs to be closed.
 			
 			console.log('Total number of voters: ', Object.keys(newVoteDictionary).length);
-			
-			console.log(possible_reactions);
-			
-			// Tally will become a map with key = the vote text and value = the number of users that made that vote
-			var tally = new Map();
-			
-			// For each possible reaction, if it has not yet been declared as key, declare it as one and set its value to 0.
-			
-			// For each reaction/text pair in possible_reactions
-			for (var pr_reaction in possible_reactions) {
-				
-				// If the given text has not been declared as a key for the tally Map
-				if (!tally.has(possible_reactions[pr_reaction])) { 
-				
-					// Create the key and set its value to 0.
-					tally[possible_reactions[pr_reaction]] = 0;
-					
-				}
-			}
-			
+			console.log('possible_reactions: ', possible_reactions);
 			console.log('newVoteDictionary: ', newVoteDictionary);
-			
-			// For each user/reaction pair in voteDictionary
-			for (var nvd_user in newVoteDictionary) {
-				
-				// When the given user is used as a key in the vote dictionary, a reaction value is returned
-				// When that reaction value is used as a key in possible_reactions, a text value is returned
-				// If that text value exists as a key within tally, increment that key's value by 1
-				if (tally.has(possible_reactions[newVoteDictionary[nvd_user]])) { 
-				
-					tally[possible_reactions[newVoteDictionary[nvd_user]]]++;
-					
-				}
-				
-			}
-			
-			console.log(tally);
 			
 			// If the vote is NOT multipleChoice
 				// Count the number of thumbs up symbols (of all types) as well as thumbs down symbols in the newVoteDictionary
