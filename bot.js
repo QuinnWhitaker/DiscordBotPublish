@@ -224,11 +224,8 @@ function addCollector(message) {
 				// For each messageReaction in the ReactionManager of the message
 				message.reactions.cache.forEach(function (messageReaction) {
 					
-					console.log('messageReaction.emoji.name: ', messageReaction.emoji.name);
 					console.log('messageReaction.emoji.toString(): ', messageReaction.emoji.toString());
-					console.log('thumbsup_tone5: ', thumbsup_tone5);
-					console.log('messageReaction.emoji.toString() == thumbsup_tone5?', messageReaction.emoji.toString() == thumbsup_tone5);
-					// If the list of possibleReactions includes the name of the emoji of this messageReaction
+					// If the list of possibleReactions includes the string of the emoji of this messageReaction
 					
 				});
 				
@@ -272,18 +269,18 @@ client.on('message', message => {
 		} else {
 			// Set the list of possible votes to thumbs up and thumbs down
 			
-			possibleVotes[':thumbsup:'] = 'Yay';
-			possibleVotes[':thumbsup_tone1:'] = 'Yay';
-			possibleVotes[':thumbsup_tone2:'] = 'Yay';
-			possibleVotes[':thumbsup_tone3:'] = 'Yay';
-			possibleVotes[':thumbsup_tone4:'] = 'Yay';
-			possibleVotes[':thumbsup_tone5:'] = 'Yay';
-			possibleVotes[':thumbsdown:'] = 'Nay';
-			possibleVotes[':thumbsdown_tone1:'] = 'Nay';
-			possibleVotes[':thumbsdown_tone2:'] = 'Nay';
-			possibleVotes[':thumbsdown_tone3:'] = 'Nay';
-			possibleVotes[':thumbsdown_tone4:'] = 'Nay';
-			possibleVotes[':thumbsdown_tone5:'] = 'Nay';
+			possibleVotes[thumbsup] = 'Yay';
+			possibleVotes[thumbsup_tone1] = 'Yay';
+			possibleVotes[thumbsup_tone2] = 'Yay';
+			possibleVotes[thumbsup_tone3] = 'Yay';
+			possibleVotes[thumbsup_tone4] = 'Yay';
+			possibleVotes[thumbsup_tone5] = 'Yay';
+			possibleVotes[thumbsdown] = 'Nay';
+			possibleVotes[thumbsdown_tone1] = 'Nay';
+			possibleVotes[thumbsdown_tone2] = 'Nay';
+			possibleVotes[thumbsdown_tone3] = 'Nay';
+			possibleVotes[thumbsdown_tone4] = 'Nay';
+			possibleVotes[thumbsdown_tone5] = 'Nay';
 
 		}
 	
