@@ -171,20 +171,29 @@ function updatePoll(message) {
 			var tally = new Map();
 			
 			// For each possible reaction, if it has not yet been declared as key, declare it as one and set its value to 0.
-			for (let [pr_reaction, pr_text] of possible_reactions) {
+			
+			// For each reaction/text pair in possible_reactions
+			for (var pr_reaction in possible_reactions) {
 				
-				if (!tally.has(pr_text)) { 
+				// If the given text has not been declared as a key for the tally Map
+				if (!tally.has(possible_reactions[pr_reaction])) { 
+				
+					// Create the key and set its value to 0.
 					tally[pr_text] = 0;
+					
 				}
-				
 			}
 			
-			// For each vote in voteDictionary
-			
-			for (let [nvd_user, nvd_reaction] of newVoteDictionary) {
+			// For each user/reaction pair in voteDictionary
+			for (var nvd_user in newVoteDictionary) {
 				
-				if (!tally.has(possible_reactions[nvd_reaction])) { 
+				// When the given user is used as a key in the vote dictionary, a reaction value is returned
+				// When that reaction value is used as a key in possible_reactions, a text value is returned
+				// If that text value exists as a key within tally, increment that key's value by 1
+				if (tally.has(possible_reactions[newVoteDictionary[nvd_user]])) { 
+				
 					tally[v]++;
+					
 				}
 				
 			}
