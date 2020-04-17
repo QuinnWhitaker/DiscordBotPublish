@@ -174,7 +174,7 @@ function updatePoll(message) {
 				
 				const pr_text = possible_reactions[pr_vote];
 				
-				if (tally[pr_text] != null) {
+				if (tally[pr_text] == null) {
 					 
 					tally[pr_text] = 0;
 					 
