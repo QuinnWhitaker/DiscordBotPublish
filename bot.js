@@ -165,6 +165,8 @@ function updatePoll(message) {
 			
 			console.log('Total number of voters: ', Object.keys(newVoteDictionary).length);
 			
+			console.log(possible_reactions);
+			
 			// Tally will become a map with key = the vote text and value = the number of users that made that vote
 			var tally = new Map();
 			
