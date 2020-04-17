@@ -470,6 +470,10 @@ client.on('message', message => {
 	}
 });
 
+client.on('messageReactionRemove', (reaction, user) => {
+	console.log('reaction: ', reaction);
+});
+
 // Log our bot in using the token from https://discordapp.com/developers/applications/me
 client.login('Njg1MzUxMTk3MDcwMDY1Njc1.XmIGIA.sgbayqZK1UY1A3KbBi5FJB3zwj4');
 
