@@ -18,8 +18,6 @@ const voteCommand = '!vote1 ';
 
 // Global variables for each thumbs up and thumbs down emoji
 const thumbsup = 👍;
-
-
 const thumbsdown = 👎;
 
 
