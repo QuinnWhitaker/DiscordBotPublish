@@ -188,7 +188,6 @@ function addCollector(message) {
 			const filter = (reaction, user) => {
 				
 				console.log('Using filter...');
-				console.log('reaction.emoji: ', reaction.emoji);
 				console.log('reaction.emoji.toString(): ', reaction.emoji.toString());
 
 				// If the user is not a bot and the reaction is included in the list of approved reactions, the filter will approve of the reaction.
@@ -214,6 +213,8 @@ function addCollector(message) {
 				message.reactions.cache.forEach(function (messageReaction) {
 					
 					console.log('messageReaction.emoji.name: ', messageReaction.emoji.name);
+					console.log('messageReaction.emoji.toString(): ', messageReaction.emoji.toString());
+					console.log('thumbsup_tone5: ', thumbsup_tone5);
 					// If the list of possibleReactions includes the name of the emoji of this messageReaction
 					
 				});
