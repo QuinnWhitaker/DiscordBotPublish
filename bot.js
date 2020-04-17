@@ -169,21 +169,35 @@ function updatePoll(message) {
 			
 			var tally = {};
 			
+			// Fill up the tally with all possible votes
+			for (var pr_vote in possible_reactions) {
+				
+				const pr_text = possible_reactions[pr_vote];
+				
+				if (tally[pr_text] != null) {
+					 
+					tally[pr_text] = 0;
+					 
+				}
+			}
+			
 			for (var user in newVoteDictionary) {
 				const their_vote = newVoteDictionary[user];
+				const their_text = possible_reactions[their_vote];
 				
 				// If their vote is defined in the possible_reactions dictionary
-				if (possible_reactions[their_vote] != null) {
-					
-					 if (tally[possible_reactions[their_vote]] == null) {
+				if (their_text != null) {
+
+					 if (tally[their_text] == null) {
 						 
-						 tally[possible_reactions[their_vote]] = 0;
+						 tally[their_text] = 1;
 						 
 					 } else {
 						 
-						 tally[possible_reactions[their_vote]]++;
+						 tally[their_text]++;
 						 
 					 }
+					 
 				}
 			}
 			
