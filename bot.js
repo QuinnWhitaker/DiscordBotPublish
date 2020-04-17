@@ -16,20 +16,7 @@ const memberID = '677562715799027713';
 // Declare the prefix command for voting
 const voteCommand = '!vote1 ';
 
-// Global variables for each thumbs up and thumbs down emoji
-const thumbsup = 			':thumbsup:';
-const thumbsup_tone1 = 		':thumbsup_tone1:';
-const thumbsup_tone2 = 		':thumbsup_tone2:';
-const thumbsup_tone3 = 		':thumbsup_tone3:';
-const thumbsup_tone4 = 		':thumbsup_tone4:';
-const thumbsup_tone5 = 		':thumbsup_tone5:';
 
-const thumbsdown = 			':thumbsdown:';
-const thumbsdown_tone1 = 	':thumbsdown_tone1:';
-const thumbsdown_tone2 = 	':thumbsdown_tone2:';
-const thumbsdown_tone3 = 	':thumbsdown_tone3:';
-const thumbsdown_tone4 = 	':thumbsdown_tone4:';
-const thumbsdown_tone5 = 	':thumbsdown_tone5:';
 
 // What does it say next to someone's name when they haven't voted?
 const noVote = 'No Vote';
@@ -53,8 +40,8 @@ function formatPollString(vote_title, issued_by, vote_status, multiple_choice, p
 		
 	} else {
 		
-		poll += thumbsup + ' : Yay\n\n'
-		poll += thumbsdown + ' : Nay\n\n'
+		poll += ':thumbsup: : Yay\n\n'
+		poll += ':thumbsdown: : Nay\n\n'
 		
 		
 		poll += '**== Current Votes ==** \n'
@@ -193,15 +180,19 @@ function addCollector(message) {
 			let rawdata = fs.readFileSync(path);
 			let this_poll = JSON.parse(rawdata);
 			
+			console.log(this_poll);
+			
 			// Get the pool of possible reactions from the JSON file
 			const possible_reactions = this_poll.possibleVotes;
+			
+			console.log('possible_reactions: ', possible_reactions);
 			
 			// Whenever a user reacts to the message
 			const filter = (reaction, user) => {
 				
 				console.log('Using filter...');
-
-				console.log('reaction.emoji.toString(): ', reaction.emoji.toString();
+				console.log('reaction: ', reaction);
+				console.log('reaction.emoji: ', reaction.emoji);
 
 				// If the user is not a bot and the reaction is included in the list of approved reactions, the filter will approve of the reaction.
 				if ((!user.bot) /*&& (reaction.emoji.name in possible_reactions)*/) {
