@@ -167,6 +167,12 @@ function updatePoll(message) {
 			console.log('possible_reactions: ', possible_reactions);
 			console.log('newVoteDictionary: ', newVoteDictionary);
 			
+			for (var user in newVoteDictionary) {
+				const their_vote = newVoteDictionary[key];
+				
+				console.log('possible_reactions[their_vote] == null ?', possible_reactions[their_vote] == null);
+			}
+			
 			// If the vote is NOT multipleChoice
 				// Count the number of thumbs up symbols (of all types) as well as thumbs down symbols in the newVoteDictionary
 			// Otherwise count the number of each unique reaction in the poll (from the pool of possible reactions)
