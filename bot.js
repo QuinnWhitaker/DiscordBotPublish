@@ -179,7 +179,7 @@ function updatePoll(message) {
 				if (!tally.has(possible_reactions[pr_reaction])) { 
 				
 					// Create the key and set its value to 0.
-					tally[pr_text] = 0;
+					tally[possible_reactions[pr_reaction]] = 0;
 					
 				}
 			}
@@ -192,7 +192,7 @@ function updatePoll(message) {
 				// If that text value exists as a key within tally, increment that key's value by 1
 				if (tally.has(possible_reactions[newVoteDictionary[nvd_user]])) { 
 				
-					tally[v]++;
+					tally[possible_reactions[newVoteDictionary[nvd_user]]]++;
 					
 				}
 				
