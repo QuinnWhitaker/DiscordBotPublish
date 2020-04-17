@@ -196,6 +196,7 @@ function addCollector(message) {
 			// Get the pool of possible reactions from the JSON file
 			const possible_reactions = this_poll.possibleVotes;
 			
+			
 			// Whenever a user reacts to the message
 			const filter = (reaction, user) => {
 				
@@ -221,17 +222,31 @@ function addCollector(message) {
 				
 				console.log('reaction.emoji.toString() in possible_reactions ? ', (reaction.emoji.toString() in possible_reactions));
 				
-				// Remove all other reactions from that user that exist in possibleReactions
+				// If that reaction is a valid reaction for this poll
 				
-				// For each messageReaction in the ReactionManager of the message
-				/*message.reactions.cache.forEach(function (messageReaction) {
+				if (reaction.emoji.toString() in possible_reactions) {
 					
-					console.log('messageReaction.emoji.toString(): ', messageReaction.emoji.toString());
-					// If the list of possibleReactions includes the string of the emoji of this messageReaction
+					// Remove all other valid reactions from that user
 					
-				});*/
-				
-				// update the poll
+					// For each reaction in the message
+					message.reactions.cache.forEach(function (iterated_reaction) {
+						
+						console.log('messageReaction.emoji.toString(): ', messageReaction.emoji.toString());
+						
+						// If it is a valid reaction AND it is not the current reaction
+						if (iterated_reaction.emoji.toString() in possible_reactions && iterated_reaction != reaction) {
+							
+							console.log('Deleting this reaction');
+							//iterated_reaction.users.remove(reactedUser);
+						}
+						
+						
+					});
+					
+					// update the poll
+					
+				}
+					
 				
 				
 				
