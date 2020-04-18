@@ -94,7 +94,7 @@ function updatePoll(message) {
 	// This function updates a poll by performing the following actions
 		// 1) Takes the poll as a message argument
 		// 2) Identifies the JSON associated with the poll and confirms its existence
-		// 3) Confirms that the message still exists
+		// 3) Confirms that the message is active
 		// 4) Checks who has currently reacted to the message and uses this information to balance the votes
 		// 5) Uses the new information to update the JSON file as well as the text of the message
 		// 6) Closes the poll if it is concluded, sending a message to the records channel
@@ -113,145 +113,195 @@ function updatePoll(message) {
 			let rawdata = fs.readFileSync(path);
 			let this_poll = JSON.parse(rawdata);
 			
-			// Get the pool of possible reactions from the JSON file
-			const possible_reactions = this_poll.possibleReactions;
-			
-			// Declare dictionary variable, to eventually replace that in the JSON
-			var newVoteDictionary = {};
-			
-			// For each user with the Member class
-			message.guild.roles.resolve(memberID).members.forEach(function (guildMember) {
+			if (this.poll.isActive) {
 				
-				const user = guildMember.user;
+				// Get the pool of possible reactions from the JSON file
+				const possible_reactions = this_poll.possibleReactions;
 				
-				var userReacted = false;
-				var theirReaction = null;
+				// Declare dictionary variable, to eventually replace that in the JSON
+				var newVoteDictionary = {};
 				
-				// See if that user has reacted to this message with a reaction from the possible reactions
-				
-				// For each reaction in the message
-				message.reactions.cache.forEach(function (iterated_reaction) {
+				// For each user with the Member class
+				message.guild.roles.resolve(memberID).members.forEach(function (guildMember) {
 					
-					// If it is a valid reaction
-					if (iterated_reaction.emoji.toString() in possible_reactions) {
+					const user = guildMember.user;
+					
+					var userReacted = false;
+					var theirReaction = null;
+					
+					// See if that user has reacted to this message with a reaction from the possible reactions
+					
+					// For each reaction in the message
+					message.reactions.cache.forEach(function (iterated_reaction) {
+						
+						// If it is a valid reaction
+						if (iterated_reaction.emoji.toString() in possible_reactions) {
 
-						// And if the current user exists within that reaction's user list
-						if (findInMap(iterated_reaction.users.cache, user)) {
-							
-							// We know the user reacted. Save the reaction to a variable.
-							userReacted = true;
-							theirReaction = iterated_reaction.emoji.toString();
+							// And if the current user exists within that reaction's user list
+							if (findInMap(iterated_reaction.users.cache, user)) {
+								
+								// We know the user reacted. Save the reaction to a variable.
+								userReacted = true;
+								theirReaction = iterated_reaction.emoji.toString();
+							}
+
 						}
+						
+					});
 
-					}
-					
-				});
-
-				// If they have reacted to the poll with a valid reaction
-				if (userReacted) {
-					
-					// ! - Warning: The reaction collector should handle duplicate reactions. This block assumes that
-					// each user has at most one reaction from among the possible reactions
-					
-					// Update newVoteDictionary with key = [that user] to value = [the saved reaction]
-					newVoteDictionary[user] = theirReaction;
-					
-				} else {
-					
-					// update newVoteDictionary with key = [that user] to value = undecidedVote
-					newVoteDictionary[user] = undecidedVote;
-					
-				}
-			});
-				
-				
-			// Determine whether the vote needs to be closed.
-			
-			// The tally dictionary will get filled with all the votes from each user, not discriminating from emoji skin tone.
-			var tally = {};
-			
-			// For each reaction among the possible reactions
-			for (var pr_vote in possible_reactions) {
-				
-				// Declare the text associated with this reaction
-				const pr_text = possible_reactions[pr_vote];
-				
-				// If the tally hasn't begin counting the number of users that chose this vote
-				if (tally[pr_text] == null) {
-					 
-					// Start the count at 0
-					tally[pr_text] = 0;
-					 
-				}
-			}
-			
-			// For each user that can vote
-			for (var user in newVoteDictionary) {
-				
-				// Declare whether they have voted and what they voted for.
-				const their_vote = newVoteDictionary[user];
-				const their_text = possible_reactions[their_vote];
-				
-				// If their vote has been declared
-				if (their_text != null) {
-					
-					// If the tally hasn't began counting the number of users that chose this vote
-					if (tally[their_text] == null) {
-						 
-						 // Start the count at 1
-						 tally[their_text] = 1;
-						 
+					// If they have reacted to the poll with a valid reaction
+					if (userReacted) {
+						
+						// ! - Warning: The reaction collector should handle duplicate reactions. This block assumes that
+						// each user has at most one reaction from among the possible reactions
+						
+						// Update newVoteDictionary with key = [that user] to value = [the saved reaction]
+						newVoteDictionary[user] = theirReaction;
+						
 					} else {
-						// If the tally already begun counting the number of users that chose this vote
+						
+						// update newVoteDictionary with key = [that user] to value = undecidedVote
+						newVoteDictionary[user] = undecidedVote;
+						
+					}
+				});
+					
+					
+				// Determine whether the vote needs to be closed.
+				
+				// The tally dictionary will get filled with all the votes from each user, not discriminating from emoji skin tone.
+				var tally = {};
+				
+				// For each reaction among the possible reactions
+				for (var pr_vote in possible_reactions) {
+					
+					// Declare the text associated with this reaction
+					const pr_text = possible_reactions[pr_vote];
+					
+					// If the tally hasn't begin counting the number of users that chose this vote
+					if (tally[pr_text] == null) {
 						 
-						// Increase that number by 1 
-						tally[their_text]++;
+						// Start the count at 0
+						tally[pr_text] = 0;
 						 
 					}
-					 
 				}
-			}
-			
-			function closeVote(result) {
+				
+				// For each user that can vote
+				for (var user in newVoteDictionary) {
+					
+					// Declare whether they have voted and what they voted for.
+					const their_vote = newVoteDictionary[user];
+					const their_text = possible_reactions[their_vote];
+					
+					// If their vote has been declared
+					if (their_text != null) {
+						
+						// If the tally hasn't began counting the number of users that chose this vote
+						if (tally[their_text] == null) {
+							 
+							 // Start the count at 1
+							 tally[their_text] = 1;
+							 
+						} else {
+							// If the tally already begun counting the number of users that chose this vote
+							 
+							// Increase that number by 1 
+							tally[their_text]++;
+							 
+						}
+						 
+					}
+				}
+				
+				console.log('tally: ', tally);
+				console.log('Math.round(5/2)=', Math.round(5/2));
 
-			}
-			
-			console.log('tally: ', tally);
-			console.log('Math.round(5/2)=', Math.round(5/2));
+				const totalVoters = Object.keys(newVoteDictionary).length;
+				
+				var maxNumber = null;
+				var winningVote = null;
+				var earlyClose = false;
+				var totalVotes = 0;
+				
+				for (var (tallied_vote in tally) {
+					
+					numberOfVotes = tally[tallied_vote];
+					totalVotes += numberOfVotes;
+					
+					if (maxNumber == null) {
+						
+						winningVote = tallied_vote;
+						maxNumber = numberOfVotes;
+						
+					} else {
+						
+						if (numberOfVotes > maxNumber) {
+							
+							winningVote = tallied_vote;
+							maxNumber = numberOfVotes;
+							
+						} else if (numberOfVotes == maxNumber) {
+							
+							winningVote = null;
+							
+						}
+						
+						if (maxNumber > Math.floor(totalVoters / 2)) {
+							
+							earlyClose = true;
+							
+						}
+					}
+					
+				}
+				
+				if (earlyClose || totalVotes == totalVoters) {
+					
+					console.log('Closing the poll: ');
+					console.log('Earlyclose? ', earlyClose);
+					console.log('WinningVote: ', winningVote);
+					console.log('maxNumber: ', maxNumber);
+					
+				}
+				
+				
+				// For each tallied vote
+					// if maxNumber is null, set maxNumber to tally[
+				
+				
+				// Update the JSON file with the newVoteDictionary and newVoteStatus
 
-			const totalVoters = Object.keys(newVoteDictionary).length;
-			
-			for (var talliedVote in tally) {
+				this_poll.voteDictionary = newVoteDictionary;
 				
-			}
-			
-			// Update the JSON file with the newVoteDictionary and newVoteStatus
+				var json = JSON.stringify(this_poll);
 
-			this_poll.voteDictionary = newVoteDictionary;
-			
-			var json = JSON.stringify(this_poll);
-
-			try {
+				try {
+					
+					fs.writeFileSync(path, json);
+					
+				} catch (err) {
+					
+					console.error(err)
 				
-				fs.writeFileSync(path, json);
+				}
 				
-			} catch (err) {
+				// Update the poll message content with the new information
 				
-				console.error(err)
-			
+				try {
+					
+					message.edit(formatPollString(this_poll.voteTitle, this_poll.issuedBy, this_poll.voteStatus, this_poll.multipleChoice, this_poll.possibleReactions, this_poll.voteDictionary));
+					
+				} catch (err) {
+					
+					console.error(err)
+				
+				}	
+				
+			} else {
+				console.log("Poll can't be updated as it is closed.");
 			}
 			
-			// Update the poll message content with the new information
-			
-			try {
-				
-				message.edit(formatPollString(this_poll.voteTitle, this_poll.issuedBy, this_poll.voteStatus, this_poll.multipleChoice, this_poll.possibleReactions, this_poll.voteDictionary));
-				
-			} catch (err) {
-				
-				console.error(err)
-			
-			}
 		}
 		
 	// If the JSON doesn't exist
@@ -330,7 +380,7 @@ function addCollector(message) {
 							// Remove that reaction
 							console.log('Deleting this reaction');
 							
-							
+							/*
 							try {
 								
 								iterated_reaction.users.remove(user);
@@ -340,7 +390,7 @@ function addCollector(message) {
 								console.error(err);
 								deletedSuccessfully =  false;
 		
-							}
+							}*/
 							
 						}
 						
@@ -442,6 +492,8 @@ client.on('message', message => {
 					this.issuedBy = issuedBy;
 					
 					this.voteStatus = voteStatus;
+					
+					this.isActive = true;
 					
 					this.voteDictionary = voteDictionary;
 					
