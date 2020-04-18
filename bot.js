@@ -182,7 +182,7 @@ function updatePoll(message) {
 					if (tally[pr_text] == null) {
 						 
 						// Start the count at 0
-						tally[pr_text] = 0;
+						tally[pr_text] = 2;
 						 
 					}
 				}
