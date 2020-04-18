@@ -380,7 +380,6 @@ function addCollector(message) {
 							// Remove that reaction
 							console.log('Deleting this reaction');
 							
-							/*
 							try {
 								
 								iterated_reaction.users.remove(user);
@@ -390,7 +389,7 @@ function addCollector(message) {
 								console.error(err);
 								deletedSuccessfully =  false;
 		
-							}*/
+							}
 							
 						}
 						
