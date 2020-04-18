@@ -226,7 +226,7 @@ function updatePoll(message) {
 				
 				for (var tallied_vote in tally) {
 					
-					numberOfVotes = tally[tallied_vote];
+					var numberOfVotes = tally[tallied_vote];
 					totalVotes += numberOfVotes;
 					
 					if (maxNumber == null) {
