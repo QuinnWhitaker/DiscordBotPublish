@@ -113,7 +113,7 @@ function updatePoll(message) {
 			let rawdata = fs.readFileSync(path);
 			let this_poll = JSON.parse(rawdata);
 			
-			if (this.poll.isActive) {
+			if (this_poll.isActive) {
 				
 				// Get the pool of possible reactions from the JSON file
 				const possible_reactions = this_poll.possibleReactions;
