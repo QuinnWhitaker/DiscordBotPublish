@@ -224,7 +224,7 @@ function updatePoll(message) {
 				var earlyClose = false;
 				var totalVotes = 0;
 				
-				for (var (tallied_vote in tally) {
+				for (var tallied_vote in tally) {
 					
 					numberOfVotes = tally[tallied_vote];
 					totalVotes += numberOfVotes;
