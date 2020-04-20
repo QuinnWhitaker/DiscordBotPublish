@@ -64,9 +64,11 @@ client.on('ready', () => {
 function formatPollString(vote_title, issued_by, vote_status, multiple_choice, possible_reactions, vote_dictionary) {
 	// This function takes in all the relevant information of a poll and generates a string for the message content to be updated as
 	
-	var poll = 	'==== **" ' + vote_title 	+ ' **" ====\n\n**Issued By:** ' 	+ issued_by + '\n\n' 
+	var poll = 	'==== **" ' + vote_title 	+ ' **" ====\n\n'
+	
+	poll += 	'**Issued By:** ' 	+ issued_by + '\n\n' 
 	poll +=		'**== Options ==** \n'
-	poll += '*(React to this message with one of the following emojis.)*\n\n'
+	poll += 	'*(React to this message with one of the following emojis.)*\n\n'
 	
 	if (multiple_choice) {
 		
@@ -88,6 +90,31 @@ function formatPollString(vote_title, issued_by, vote_status, multiple_choice, p
 	poll += 	'\n**Status: ' 	+ vote_status 	+ '**\n\n'
 	
 	return poll;
+}
+
+function formatRecordString(vote_title, issued_by, multiple_choice, vote_dictionary, vote_result) {
+	// This function takes in all the relevant information of a poll and generates a string for the message content to be updated as
+	
+	var record = 	'==== **" ' + vote_title 	+ ' **" ====\n\n'
+	
+	record += 		'**Issued By:** ' 	+ issued_by + '\n\n' 
+	
+	if (multiple_choice) {
+		
+	} else {
+		
+		record += 	'**== Votes ==** \n'
+		
+		for (var member in vote_dictionary) {
+			
+			record += member.toString() + ' : ' + vote_dictionary[member] + '\n';
+			
+		}
+	}
+	
+	record += 	'\n**Result: ' 	+ vote_result 	+ '**\n\n'
+	
+	return record;
 }
 
 function updatePoll(message) {
@@ -182,7 +209,7 @@ function updatePoll(message) {
 					if (tally[pr_text] == null) {
 						 
 						// Start the count at 0
-						tally[pr_text] = 2;
+						tally[pr_text] = 0;
 						 
 					}
 				}
