@@ -262,6 +262,7 @@ function updatePoll(message) {
 						 
 						// Start the count at 0
 						if (pr_text == yesVote) tally[pr_text] = 2;
+						else if (pr_text == noVote) tally[pr_text] = 1;
 						 
 					}
 				}
