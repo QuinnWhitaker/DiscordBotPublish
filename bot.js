@@ -306,16 +306,19 @@ function updatePoll(message) {
 				
 				for (var tallied_vote in tally) {
 					
-					console.log('tallied_vote', tallied_vote);
+					console.log('tallied_vote: ', tallied_vote);
 					var numberOfVotes = tally[tallied_vote];
 					totalVotes += numberOfVotes;
 					
 					if (maxNumber == null) {
 						
+						console.log('maxNumber is null');
 						winningVote = tallied_vote;
 						maxNumber = numberOfVotes;
 						
 					} else {
+						
+						console.log('maxNumber is not null!! here it is: ', maxNumber);
 						
 						if (numberOfVotes > maxNumber) {
 							// If the number of votes exceeds the current max
