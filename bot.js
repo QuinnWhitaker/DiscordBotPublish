@@ -78,13 +78,20 @@ client.on('ready', () => {
 	console.log('I am ready!');
   
 	// Go through each active vote in the active votes directory, and create a listener from the ID
-
-	fs.readdirSync(activeVotesPath).forEach(json => {
-		let rawdata = fs.readFileSync(json);
-		let this_poll = JSON.parse(rawdata);
+	try {
 		
-		console.log(this_poll);
-	});
+		fs.readdirSync(activeVotesPath).forEach(json => {
+			
+			console.log(json);
+			
+		});
+		
+	} catch (err) {
+		
+		console.error(err)
+	
+	}
+	
   
 });
 
