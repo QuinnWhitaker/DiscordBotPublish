@@ -418,7 +418,7 @@ function updatePoll(message) {
 					// Attempt to delete the old message
 					try {
 						
-						message => message.delete();
+						message.delete();
 						
 					} catch(err) {
 						
