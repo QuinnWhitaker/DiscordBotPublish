@@ -97,7 +97,7 @@ function formatPollString(vote_title, issued_by, vote_status, multiple_choice, p
 	return poll;
 }
 
-function formatRecordString(vote_title, issued_by, multiple_choice, vote_dictionary, winning_vote, max_Number) {
+function formatRecordString(vote_title, issued_by, multiple_choice, vote_dictionary, numberOfVotes, winning_vote, max_Number) {
 	// This function takes in all the relevant information of a poll and generates a string for the message content to be updated as
 	
 	var record = 	'==== **" ' + vote_title 	+ ' **" ====\n\n'
@@ -117,7 +117,7 @@ function formatRecordString(vote_title, issued_by, multiple_choice, vote_diction
 		}
 	}
 	
-	record += 	'\n**Result: ' 	+ winning_vote 	+ '(' + max_Number + '/' + Object.keys(vote_dictionary).length + ')**\n\n'
+	record += 	'\n**Conclusion: ' 	+ winning_vote 	+ '(' + max_Number + '/' + numberOfVotes + ')**\n\n'
 	
 	return record;
 }
@@ -308,7 +308,7 @@ function updatePoll(message) {
 					console.log('WinningVote: ', winningVote);
 					console.log('maxNumber: ', maxNumber);
 					
-					const record = formatRecordString(this_poll.vote_title, this_poll.issued_by, this_poll.multiple_choice, this_poll.vote_dictionary, winningVote, maxNumber);
+					const record = formatRecordString(this_poll.vote_title, this_poll.issued_by, this_poll.multiple_choice, this_poll.vote_dictionary, totalVoters, winningVote, maxNumber);
 					
 					let promisedRecord = client.channels.resolve(recordChannelId).send(voteTitle);
 					
