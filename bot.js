@@ -66,60 +66,73 @@ client.on('ready', () => {
   
 });
 
-function formatPollString(vote_title, issued_by, vote_status, multiple_choice, possible_reactions, vote_dictionary) {
-	// This function takes in all the relevant information of a poll and generates a string for the message content to be updated as
-	
-	var poll = 	'==== **" ' + vote_title 	+ ' **" ====\n\n'
-	
-	poll += 	'**Issued By:** ' 	+ issued_by + '\n\n' 
-	poll +=		'**== Options ==** \n'
-	poll += 	'*(React to this message with one of the following emojis.)*\n\n'
-	
-	if (multiple_choice) {
+function formatPollString(
+vote_title, 
+issued_by, 
+vote_status, 
+multiple_choice, 
+possible_reactions, 
+vote_dictionary) {
+		// This function takes in all the relevant information of a poll and generates a string for the message content to be updated as
 		
-	} else {
+		var poll = 	'==== **" ' + vote_title 	+ ' **" ====\n\n'
 		
-		poll += ':thumbsup: : ' + yesVote + '\n\n'
-		poll += ':thumbsdown: : ' + noVote + '\n\n'
+		poll += 	'**Issued By:** ' 	+ issued_by + '\n\n' 
+		poll +=		'**== Options ==** \n'
+		poll += 	'*(React to this message with one of the following emojis.)*\n\n'
 		
-		
-		poll += '**== Current Votes ==** \n'
-		
-		for (var member in vote_dictionary) {
+		if (multiple_choice) {
 			
-			poll += member.toString() + ' : ' + vote_dictionary[member] + '\n';
+		} else {
 			
+			poll += ':thumbsup: : ' + yesVote + '\n\n'
+			poll += ':thumbsdown: : ' + noVote + '\n\n'
+			
+			
+			poll += '**== Current Votes ==** \n'
+			
+			for (var member in vote_dictionary) {
+				
+				poll += member.toString() + ' : ' + vote_dictionary[member] + '\n';
+				
+			}
 		}
-	}
-	
-	poll += 	'\n**Status: ' 	+ vote_status 	+ '**\n\n'
-	
-	return poll;
+		
+		poll += 	'\n**Status: ' 	+ vote_status 	+ '**\n\n'
+		
+		return poll;
 }
 
-function formatRecordString(vote_title, issued_by, multiple_choice, vote_dictionary, numberOfVotes, winning_vote, max_Number) {
-	// This function takes in all the relevant information of a poll and generates a string for the message content to be updated as
-	
-	var record = 	'==== **" ' + vote_title 	+ ' **" ====\n\n'
-	
-	record += 		'**Issued By:** ' 	+ issued_by + '\n\n' 
-	
-	if (multiple_choice) {
+function formatRecordString(
+vote_title, 
+issued_by, 
+multiple_choice, 
+vote_dictionary, 
+numberOfVotes, 
+winning_vote, 
+max_Number) {
+		// This function takes in all the relevant information of a poll and generates a string for the message content to be updated as
 		
-	} else {
+		var record = 	'==== **" ' + vote_title 	+ ' **" ====\n\n'
 		
-		record += 	'**== Votes ==** \n'
+		record += 		'**Issued By:** ' 	+ issued_by + '\n\n' 
 		
-		for (var member in vote_dictionary) {
+		if (multiple_choice) {
 			
-			record += member.toString() + ' : ' + vote_dictionary[member] + '\n';
+		} else {
 			
+			record += 	'**== Votes ==** \n'
+			
+			for (var member in vote_dictionary) {
+				
+				record += member.toString() + ' : ' + vote_dictionary[member] + '\n';
+				
+			}
 		}
-	}
-	
-	record += 	'\n**Conclusion: ' 	+ winning_vote 	+ '(' + max_Number + '/' + numberOfVotes + ')**\n\n'
-	
-	return record;
+		
+		record += 	'\n**Conclusion: ' 	+ winning_vote 	+ '(' + max_Number + '/' + numberOfVotes + ')**\n\n'
+		
+		return record;
 }
 
 function updatePoll(message) {
@@ -331,6 +344,8 @@ function updatePoll(message) {
 						
 				}
 				
+				console.log('updaePoll: reached here!');
+				
 				// Update the JSON file with the newVoteDictionary
 
 				this_poll.voteDictionary = newVoteDictionary;
@@ -351,7 +366,13 @@ function updatePoll(message) {
 				
 				try {
 					
-					message.edit(formatPollString(this_poll.voteTitle, this_poll.issuedBy, this_poll.voteStatus, this_poll.multipleChoice, this_poll.possibleReactions, this_poll.voteDictionary));
+					message.edit(formatPollString(
+						this_poll.voteTitle, 
+						this_poll.issuedBy, 
+						this_poll.voteStatus, 
+						this_poll.multipleChoice, 
+						this_poll.possibleReactions, 
+						this_poll.voteDictionary));
 					
 				} catch (err) {
 					
