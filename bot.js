@@ -10,6 +10,11 @@ const client = new Discord.Client();
 // const voteChannelId = '677690362029932594'; // Main channel - comment out when testing
 const voteChannelId = '685413820096577573'; // Test channel - comment out when deploying
 
+// The id of the channel where votes will be recorded.
+// const recordChannelId = '677576526723809302'; // Main channel - comment out when testing
+const recordChannelId = '687488031233540146'; // Test channel - comment out when deploying
+ 
+
 // The id of the Member role, the role that voters must have to participate in the vote.
 const memberID = '677562715799027713';
 
@@ -92,7 +97,7 @@ function formatPollString(vote_title, issued_by, vote_status, multiple_choice, p
 	return poll;
 }
 
-function formatRecordString(vote_title, issued_by, multiple_choice, vote_dictionary, vote_result) {
+function formatRecordString(vote_title, issued_by, multiple_choice, vote_dictionary, winning_vote, max_Number) {
 	// This function takes in all the relevant information of a poll and generates a string for the message content to be updated as
 	
 	var record = 	'==== **" ' + vote_title 	+ ' **" ====\n\n'
@@ -112,7 +117,7 @@ function formatRecordString(vote_title, issued_by, multiple_choice, vote_diction
 		}
 	}
 	
-	record += 	'\n**Result: ' 	+ vote_result 	+ '**\n\n'
+	record += 	'\n**Result: ' 	+ winning_vote 	+ '(' max_Number + '/' Object.keys(vote_dictionary).length ')**\n\n'
 	
 	return record;
 }
@@ -242,7 +247,6 @@ function updatePoll(message) {
 				}
 				
 				console.log('tally: ', tally);
-				console.log('Math.round(5/2)=', Math.round(5/2));
 
 				const totalVoters = Object.keys(newVoteDictionary).length;
 				
@@ -264,20 +268,30 @@ function updatePoll(message) {
 					} else {
 						
 						if (numberOfVotes > maxNumber) {
+							// If the number of votes exceeds the current max
 							
+							// Set this as the current max
 							winningVote = tallied_vote;
 							maxNumber = numberOfVotes;
 							
 						} else if (numberOfVotes == maxNumber) {
+							// If the number of votes for this ties the current max
 							
-							winningVote = null;
-							
+							// if it's multiple choice, the winning vote is a tie.
+							if (this_poll.multipleChoice) {
+								winningVote = '[Tie Vote]';
+							} else {
+								// If it's a yesno vote, the winning vote is "no"
+								winningVote = tally[noVote];
+							}
 						}
 						
 						if (maxNumber > Math.floor(totalVoters / 2)) {
+							// If the winning number of votes is greater than half the total number of possible votes rounded down, it has majority and the vote can be closed early
 							
 							earlyClose = true;
-							
+						} else {
+							earlyClose = false;
 						}
 					}
 					
@@ -286,18 +300,30 @@ function updatePoll(message) {
 				if (earlyClose || totalVotes == totalVoters) {
 					
 					console.log('Closing the poll: ');
+					
+					this_poll.isActive = false;
+					this_poll.status = 'Closed';
+					
 					console.log('Earlyclose? ', earlyClose);
 					console.log('WinningVote: ', winningVote);
 					console.log('maxNumber: ', maxNumber);
 					
+					const record = formatRecordString(this_poll.vote_title, this_poll.issued_by, this_poll.multiple_choice, this_poll.vote_dictionary, winningVote, maxNumber);
+					
+					let promisedRecord = client.channels.resolve(recordChannelId).send(voteTitle);
+					
+					promisedRecord.then(
+
+						resultingRecord => {
+							
+						}, rejectionReason => {
+							// If the message failed to send
+				
+							console.log("Failed to create record in records channel. Reason: ", rejectionReason);
+						}
 				}
 				
-				
-				// For each tallied vote
-					// if maxNumber is null, set maxNumber to tally[
-				
-				
-				// Update the JSON file with the newVoteDictionary and newVoteStatus
+				// Update the JSON file with the newVoteDictionary
 
 				this_poll.voteDictionary = newVoteDictionary;
 				
