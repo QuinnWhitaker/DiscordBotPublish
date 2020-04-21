@@ -251,6 +251,9 @@ function updatePoll(message) {
 				// The tally dictionary will get filled with all the votes from each user, not discriminating from emoji skin tone.
 				var tally = {};
 				
+				tally[yesVote] = 2;
+				tally[noVote] = 1;
+				/*
 				// For each reaction among the possible reactions
 				for (var pr_vote in possible_reactions) {
 					
@@ -261,11 +264,11 @@ function updatePoll(message) {
 					if (tally[pr_text] == null) {
 						 
 						// Start the count at 0
-						if (pr_text == yesVote) tally[pr_text] = 2;
-						else if (pr_text == noVote) tally[pr_text] = 1;
+						tally[pr_text] = 0;
 						 
 					}
 				}
+				*/
 				
 				// For each user that can vote
 				for (var user in newVoteDictionary) {
