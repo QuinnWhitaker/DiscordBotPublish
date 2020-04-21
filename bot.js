@@ -93,9 +93,9 @@ client.on('ready', () => {
 				// Get the id from the json
 				const messageId = this_poll.pollId;
 				
-				client.channels.resolve(voteChannelId).fetch(messageId)
-				  .then(message => console.log(message.content))
-				  .catch(console.error);
+				client.channels.resolve(voteChannelId).fetchMessage(messageId).then(msg => 
+					console.log(msg);
+				);
 				
 			} else {
 				
