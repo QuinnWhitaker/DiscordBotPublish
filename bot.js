@@ -117,7 +117,7 @@ function formatRecordString(vote_title, issued_by, multiple_choice, vote_diction
 		}
 	}
 	
-	record += 	'\n**Result: ' 	+ winning_vote 	+ '(' max_Number + '/' Object.keys(vote_dictionary).length ')**\n\n'
+	record += 	'\n**Result: ' 	+ winning_vote 	+ '(' + max_Number + '/' Object.keys(vote_dictionary).length ')**\n\n'
 	
 	return record;
 }
