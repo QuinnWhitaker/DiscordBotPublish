@@ -332,7 +332,8 @@ function updatePoll(message) {
 								winningVote = noVote;
 							}
 						}
-						
+						console.log('maxNumber: ', maxNumber);
+						console.log('Math.floor(totalVoters / 2)', Math.floor(totalVoters / 2));
 						if (maxNumber > Math.floor(totalVoters / 2)) {
 							// If the winning number of votes is greater than half the total number of possible votes rounded down, it has majority and the vote can be closed early
 							
