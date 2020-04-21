@@ -144,7 +144,7 @@ max_Number) {
 		
 		record += 	'\n========================================'
 		var record = 	'**" ' + vote_title 	+ ' **" \n\n'
-		record += 		'Issued: ' + startMonth + '/' + startDay + '/' + startYear + ', ' + startTime + ' (CST)\n'
+		record += 		'Issued: ' + startDate + ' (CST)\n'
 		record += 		'Concluded: ' + endDate + ' (CST)\n\n'
 		
 		record += 		'Issued By: ' 	+ issued_by + '\n\n' 
