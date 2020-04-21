@@ -106,13 +106,14 @@ vote_dictionary) {
 		
 		poll += 	'\nStatus: **' 	+ vote_status 	+ '**\n'
 		
-		poll += 	'\n==== ===='
+		poll += 	'\n========================================'
 		
 		return poll;
 }
 
 function formatRecordString(
-vote_title, 
+vote_title,
+startDate, 
 issued_by, 
 multiple_choice, 
 vote_dictionary, 
@@ -121,7 +122,20 @@ winning_vote,
 max_Number) {
 		// This function takes in all the relevant information of a poll and generates a string for the message content to be updated as
 		
-		var record = 	'==== **" ' + vote_title 	+ ' **" ====\n\n'
+		
+		var startDay = startDate.getDate();
+		var startMonth = startDate.getMonth() + 1; // Since getMonth() returns month from 0-11 not 1-12
+		var startYear = startDate.getFullYear();
+		
+		var endDate = new Date();
+		var endDay = endDate.getDate();
+		var endMonth = endDate.getMonth() + 1;
+		var endYear = endDate.getFullYear();
+		
+		record += 	'\n========================================'
+		var record = 	'**" ' + vote_title 	+ ' **" \n\n'
+		record += 		'Issued: ' + startMonth + '/' + startDay + '/' + startYear + '\n'
+		record += 		'Concluded: ' + endMonth + '/' + endDay + '/' + endYear + '\n'
 		
 		record += 		'Issued By: ' 	+ issued_by + '\n\n' 
 		
@@ -140,7 +154,7 @@ max_Number) {
 		
 		record += 	'\nConclusion: **' 	+ winning_vote 	+ '** *(' + max_Number + '/' + numberOfVotes + ')*\n'
 		
-		record += 	'\n==== ===='
+		record += 	'\n========================================'
 		
 		return record;
 }
@@ -333,6 +347,7 @@ function updatePoll(message) {
 					
 					const record = formatRecordString(
 						this_poll.voteTitle, 
+						this_poll.startDate,
 						this_poll.issuedBy, 
 						this_poll.multipleChoice, 
 						newVoteDictionary, 
@@ -601,6 +616,9 @@ client.on('message', message => {
 			resultingMessage => {
 				// If the message successfully sent
 				
+				// Record the current date
+				var date = new Date();
+				
 				// Declare the ID of the new message
 				const messageID = resultingMessage.id;
 				
@@ -610,6 +628,8 @@ client.on('message', message => {
 				function JsonMessage() {
 					
 					this.pollId = messageID;
+					
+					this.startDate = date;
 					
 					this.multipleChoice = multipleChoice;
 					
