@@ -4,7 +4,7 @@
 const Discord = require('discord.js');
 
 // Import the moment.js module
-const moment = require('moment');
+const moment = require('moment-timezone');
 
 // Create an instance of a Discord client
 const client = new Discord.Client();
