@@ -12,7 +12,7 @@ const voteChannelId = '685413820096577573'; // Test channel - comment out when d
 
 // The id of the channel where votes will be recorded.
 // const recordChannelId = '677576526723809302'; // Main channel - comment out when testing
-const recordChannelId = '687488031233540146'; // Test channel - comment out when deploying
+const recordChannelId = '702205635130818562'; // Test channel - comment out when deploying
  
 
 // The id of the Member role, the role that voters must have to participate in the vote.
