@@ -352,10 +352,6 @@ function updatePoll(message) {
 							console.log("Failed to create record in records channel. Reason: ", rejectionReason);
 						}
 					);
-					
-					// Delete the old message
-					
-					channel.fetchMessage(message.id).then(msg => msg.delete());
 						
 				}
 				
@@ -375,7 +371,25 @@ function updatePoll(message) {
 				
 				}
 				
-				// If the poll was closed afterwards, move the file to the oldvotes archive
+				// Update the poll message content with the new information
+				
+				try {
+					
+					message.edit(formatPollString(
+						this_poll.voteTitle, 
+						this_poll.issuedBy, 
+						this_poll.voteStatus, 
+						this_poll.multipleChoice, 
+						this_poll.possibleReactions, 
+						this_poll.voteDictionary));
+					
+				} catch (err) {
+					
+					console.error(err)
+				
+				}	
+				
+				// If the poll was closed afterwards, move the file to the oldvotes archive, and delete the active vote
 				if (!this_poll.isActive) {
 					
 					//moves the $file to $dir2
@@ -400,25 +414,19 @@ function updatePoll(message) {
 
 					//move file1.htm from 'test/' to 'test/dir_1/'
 					moveFile(JSONpath, inactiveVotesPath);
+					
+					// Attempt to delete the old message
+					try {
+						
+						client.channels.resolve(voteChannelId).fetchMessage(message.id).then(msg => msg.delete());
+						
+					} catch(err) {
+						
+						console.error(err)
+						
+					}
+					
 				}
-				
-				// Update the poll message content with the new information
-				
-				try {
-					
-					message.edit(formatPollString(
-						this_poll.voteTitle, 
-						this_poll.issuedBy, 
-						this_poll.voteStatus, 
-						this_poll.multipleChoice, 
-						this_poll.possibleReactions, 
-						this_poll.voteDictionary));
-					
-				} catch (err) {
-					
-					console.error(err)
-				
-				}	
 				
 			} else {
 				console.log("Poll can't be updated as it is closed.");
