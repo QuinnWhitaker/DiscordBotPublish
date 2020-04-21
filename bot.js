@@ -302,6 +302,8 @@ function updatePoll(message) {
 				var earlyClose = false;
 				var totalVotes = 0;
 				
+				console.log('Print tally? What is the length?', Object.keys(tally).length;);
+				
 				for (var tallied_vote in tally) {
 					
 					console.log('tallied_vote', tallied_vote);
