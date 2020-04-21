@@ -140,7 +140,7 @@ winning_vote,
 max_Number) {
 		// This function takes in all the relevant information of a poll and generates a string for the message content to be updated as
 		
-		var endDate = getCentralDate()();
+		var endDate = getCentralDate();
 		var endTime = endDate.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
 		var endDay = endDate.getDate();
 		var endMonth = endDate.getMonth() + 1; // Since getMonth() returns month from 0-11 not 1-12
