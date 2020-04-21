@@ -36,6 +36,12 @@ const thumbsdown_tone3 = '👎' + '🏽'
 const thumbsdown_tone4 = '👎' + '🏾'
 const thumbsdown_tone5 = '👎' + '🏿'
 
+// The path to the folder containing all JSONs related to active votes
+const activeVotesPath = '.\\votes\\active'
+
+// The path to the folder containing all JSONs related to votes that have been closed or are otherwise no longer active.
+const inactiveVotesPath = '.\\votes\\inactive'
+
 // Text for Yes No Votes
 const yesVote = 'Yes';
 const noVote = 'No';
@@ -100,7 +106,7 @@ vote_dictionary) {
 		
 		poll += 	'\nStatus: **' 	+ vote_status 	+ '**\n'
 		
-		poll += 	'\n==============================='
+		poll += 	'\n==== ===='
 		
 		return poll;
 }
@@ -132,9 +138,9 @@ max_Number) {
 			}
 		}
 		
-		record += 	'\nConclusion: **' 	+ winning_vote 	+ '** *(' + max_Number + '/' + numberOfVotes + ')*\n\n'
+		record += 	'\nConclusion: **' 	+ winning_vote 	+ '** *(' + max_Number + '/' + numberOfVotes + ')*\n'
 		
-		record += 	'\n==============================='
+		record += 	'\n==== ===='
 		
 		return record;
 }
@@ -151,15 +157,15 @@ function updatePoll(message) {
 	// Find the JSON file associated with the message_id
 	const fs = require('fs')
 
-	const path = '.\\votes\\' + message.id + '.json'
+	const JSONpath = activeVotesPath + '\\' + message.id + '.json'
 
 	try {
 		
 		// If the JSON exists
-		if (fs.existsSync(path)) {
+		if (fs.existsSync(JSONpath)) {
 			
 			// Import the JSON file
-			let rawdata = fs.readFileSync(path);
+			let rawdata = fs.readFileSync(JSONpath);
 			let this_poll = JSON.parse(rawdata);
 			
 			if (this_poll.isActive) {
@@ -348,8 +354,6 @@ function updatePoll(message) {
 						
 				}
 				
-				console.log('updaePoll: reached here!');
-				
 				// Update the JSON file with the newVoteDictionary
 
 				this_poll.voteDictionary = newVoteDictionary;
@@ -358,12 +362,39 @@ function updatePoll(message) {
 
 				try {
 					
-					fs.writeFileSync(path, json);
+					fs.writeFileSync(JSONpath, json);
 					
 				} catch (err) {
 					
 					console.error(err)
 				
+				}
+				
+				// If the poll was closed afterwards, move the file to the oldvotes archive
+				if (!this_poll.isActive) {
+					
+					//moves the $file to $dir2
+					var moveFile = (file, dir2)=>{
+						
+					  //include the fs, path modules
+					  var fs = require('fs');
+					  var path = require('path');
+
+					  //gets file name and adds it to dir2
+					  var f = path.basename(file);
+					  var dest = path.resolve(dir2, f);
+
+					  fs.rename(file, dest, (err)=>{
+						  
+						if(err) throw err;
+						else console.log('Successfully moved');
+						
+					  });
+					  
+					};
+
+					//move file1.htm from 'test/' to 'test/dir_1/'
+					moveFile(JSONpath, inactiveVotesPath);
 				}
 				
 				// Update the poll message content with the new information
@@ -405,15 +436,15 @@ function addCollector(message) {
 	// Find the JSON file associated with the message_id
 	const fs = require('fs')
 
-	const path = '.\\votes\\' + message.id + '.json'
+	const JSONpath = activeVotesPath + '\\' + message.id + '.json'
 	
 	try {
 		
 		// If the JSON exists
-		if (fs.existsSync(path)) {
+		if (fs.existsSync(JSONpath)) {
 			
 			// Import the JSON file
-			let rawdata = fs.readFileSync(path);
+			let rawdata = fs.readFileSync(JSONpath);
 			let this_poll = JSON.parse(rawdata);
 			
 			// Get the pool of possible reactions from the JSON file
@@ -478,7 +509,6 @@ function addCollector(message) {
 							}
 							
 						}
-						
 						
 					});
 					
@@ -590,13 +620,13 @@ client.on('message', message => {
 				
 				var json = JSON.stringify(data);
 				
-				var path = '.\\votes\\' + messageID + '.json'
+				var JSONpath = activeVotesPath + '\\' + messageID + '.json'
 				
 				const fs = require('fs');
 
 				try {
 					
-					fs.writeFileSync(path, json);
+					fs.writeFileSync(JSONpath, json);
 					
 				} catch (err) {
 					
