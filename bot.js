@@ -44,10 +44,10 @@ const thumbsdown_tone4 = '👎' + '🏾'
 const thumbsdown_tone5 = '👎' + '🏿'
 
 // The path to the folder containing all JSONs related to active votes
-const activeVotesPath = '.\\votes\\active'
+const activeVotesPath = './votes/active'
 
 // The path to the folder containing all JSONs related to votes that have been closed or are otherwise no longer active.
-const inactiveVotesPath = '.\\votes\\inactive'
+const inactiveVotesPath = './votes/inactive'
 
 // Text for Yes No Votes
 const yesVote = 'Yes';
@@ -78,22 +78,12 @@ client.on('ready', () => {
 	console.log('I am ready!');
   
 	// Go through each active vote in the active votes directory, and create a listener from the ID
-  
-	fs.readdir(activeVotesPath, function (err, jsons) {
+
+	fs.readdirSync(activeVotesPath).forEach(json => {
+		let rawdata = fs.readFileSync(json);
+		let this_poll = JSON.parse(rawdata);
 		
-		//handling error
-		if (err) {
-			return console.log('Unable to scan directory: ' + err);
-		} 
-		//listing all files using forEach
-		jsons.forEach(function (json) {
-			// Do whatever you want to do with the file
-			let rawdata = fs.readFileSync(json);
-			let this_poll = JSON.parse(rawdata);
-			
-			console.log(this_poll);
-		});
-		
+		console.log(this_poll);
 	});
   
 });
@@ -203,7 +193,7 @@ function updatePoll(message) {
 	
 	// Find the JSON file associated with the message_id
 
-	const JSONpath = activeVotesPath + '\\' + message.id + '.json'
+	const JSONpath = activeVotesPath + '/' + message.id + '.json'
 
 	try {
 		
@@ -506,7 +496,7 @@ function addCollector(message) {
 	// Find the JSON file associated with the message_id
 	
 
-	const JSONpath = activeVotesPath + '\\' + message.id + '.json'
+	const JSONpath = activeVotesPath + '/' + message.id + '.json'
 	
 	try {
 		
@@ -701,7 +691,7 @@ client.on('message', message => {
 				
 				var json = JSON.stringify(data);
 				
-				var JSONpath = activeVotesPath + '\\' + messageID + '.json'
+				var JSONpath = activeVotesPath + '/' + messageID + '.json'
 
 				try {
 					
