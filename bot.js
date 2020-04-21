@@ -91,7 +91,7 @@ client.on('ready', () => {
 				let this_poll = JSON.parse(rawdata);
 				
 				// Get the id from the json
-				messageId = this_poll.pollId;
+				const messageId = this_poll.pollId;
 				
 				let message = msg.channel.messages.fetch(messageId)
 				  .then(message => console.log(message.content))
