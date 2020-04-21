@@ -350,7 +350,12 @@ function updatePoll(message) {
 							// If the message failed to send
 				
 							console.log("Failed to create record in records channel. Reason: ", rejectionReason);
-						});
+						}
+					);
+					
+					// Delete the old message
+					
+					channel.fetchMessage(message.id).then(msg => msg.delete());
 						
 				}
 				
