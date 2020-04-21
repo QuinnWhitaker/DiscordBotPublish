@@ -292,8 +292,8 @@ function updatePoll(message) {
 				// The tally dictionary will get filled with all the votes from each user, not discriminating from emoji skin tone.
 				var tally = {};
 				
-				tally[yesVote] = 2;
-				tally[noVote] = 1;
+				tally[yesVote] = 0;
+				tally[noVote] = 0;
 				/*
 				// For each reaction among the possible reactions
 				for (var pr_vote in possible_reactions) {
