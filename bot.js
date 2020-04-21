@@ -320,7 +320,8 @@ function updatePoll(message) {
 							// If the message failed to send
 				
 							console.log("Failed to create record in records channel. Reason: ", rejectionReason);
-						}
+						});
+						
 				}
 				
 				// Update the JSON file with the newVoteDictionary
