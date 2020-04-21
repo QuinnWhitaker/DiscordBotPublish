@@ -77,8 +77,8 @@ vote_dictionary) {
 		
 		var poll = 	'==== **" ' + vote_title 	+ ' **" ====\n\n'
 		
-		poll += 	'**Issued By:** ' 	+ issued_by + '\n\n' 
-		poll +=		'**== Options ==** \n'
+		poll += 	'Issued By: ' 	+ issued_by + '\n\n' 
+		poll +=		'== Options == \n'
 		poll += 	'*(React to this message with one of the following emojis.)*\n\n'
 		
 		if (multiple_choice) {
@@ -89,7 +89,7 @@ vote_dictionary) {
 			poll += ':thumbsdown: : ' + noVote + '\n\n'
 			
 			
-			poll += '**== Current Votes ==** \n'
+			poll += '== Current Votes == \n'
 			
 			for (var member in vote_dictionary) {
 				
@@ -98,7 +98,9 @@ vote_dictionary) {
 			}
 		}
 		
-		poll += 	'\n**Status: ' 	+ vote_status 	+ '**\n\n'
+		poll += 	'\nStatus: **' 	+ vote_status 	+ '**\n'
+		
+		poll += 	'\n==============================='
 		
 		return poll;
 }
@@ -115,13 +117,13 @@ max_Number) {
 		
 		var record = 	'==== **" ' + vote_title 	+ ' **" ====\n\n'
 		
-		record += 		'**Issued By:** ' 	+ issued_by + '\n\n' 
+		record += 		'Issued By: ' 	+ issued_by + '\n\n' 
 		
 		if (multiple_choice) {
 			
 		} else {
 			
-			record += 	'**== Votes ==** \n'
+			record += 	'== Votes == \n'
 			
 			for (var member in vote_dictionary) {
 				
@@ -130,7 +132,9 @@ max_Number) {
 			}
 		}
 		
-		record += 	'\n**Conclusion: ' 	+ winning_vote 	+ ' (' + max_Number + '/' + numberOfVotes + ')**\n\n'
+		record += 	'\nConclusion: **' 	+ winning_vote 	+ '** *(' + max_Number + '/' + numberOfVotes + ')*\n\n'
+		
+		record += 	'\n==============================='
 		
 		return record;
 }
@@ -325,7 +329,7 @@ function updatePoll(message) {
 						this_poll.voteTitle, 
 						this_poll.issuedBy, 
 						this_poll.multipleChoice, 
-						this_poll.voteDictionary, 
+						newVoteDictionary, 
 						totalVoters, 
 						winningVote, 
 						maxNumber);
