@@ -6,12 +6,16 @@ const Discord = require('discord.js');
 // Import the moment.js module
 const moment = require('moment-timezone');
 
+// Import file browsing modules
+const fs = require('fs');
+const path = require('path');
+
 // Create an instance of a Discord client
 const client = new Discord.Client();
 
 // The id of the channel where active votes will be posted.
 // const voteChannelId = '677690362029932594'; // Main channel - comment out when testing
-const voteChannelId = '685413820096577573'; // Test channel - comment out when deploying
+const voteChannelId = '702273789085483092'; // Test channel - comment out when deploying
 
 // The id of the channel where votes will be recorded.
 // const recordChannelId = '677576526723809302'; // Main channel - comment out when testing
@@ -71,7 +75,26 @@ const findInMap = (map, val) => {
 // When the bot is ready 
 client.on('ready', () => {
 	
-  console.log('I am ready!');
+	console.log('I am ready!');
+  
+	// Go through each active vote in the active votes directory, and create a listener from the ID
+  
+	fs.readdir(activeVotesPath, function (err, jsons) {
+		
+		//handling error
+		if (err) {
+			return console.log('Unable to scan directory: ' + err);
+		} 
+		//listing all files using forEach
+		jsons.forEach(function (json) {
+			// Do whatever you want to do with the file
+			let rawdata = fs.readFileSync(json);
+			let this_poll = JSON.parse(rawdata);
+			
+			console.log(this_poll);
+		});
+		
+	});
   
 });
 
@@ -179,7 +202,6 @@ function updatePoll(message) {
 		// 6) Closes the poll if it is concluded, sending a message to the records channel
 	
 	// Find the JSON file associated with the message_id
-	const fs = require('fs')
 
 	const JSONpath = activeVotesPath + '\\' + message.id + '.json'
 
@@ -362,6 +384,9 @@ function updatePoll(message) {
 					this_poll.isActive = false;
 					this_poll.voteStatus = voteClosed;
 					
+					console.log('this_poll.isActive ', this_poll.isActive);
+					console.log('this_poll.voteStatus ', this_poll.voteStatus);
+					
 					console.log('Earlyclose? ', earlyClose);
 					console.log('WinningVote: ', winningVote);
 					console.log('maxNumber: ', maxNumber);
@@ -430,10 +455,6 @@ function updatePoll(message) {
 					
 					//moves the $file to $dir2
 					var moveFile = (file, dir2)=>{
-						
-					  //include the fs, path modules
-					  var fs = require('fs');
-					  var path = require('path');
 
 					  //gets file name and adds it to dir2
 					  var f = path.basename(file);
@@ -483,7 +504,7 @@ function addCollector(message) {
 	// When users react, it deletes all other valid reactions from that user, then updates the poll
 	
 	// Find the JSON file associated with the message_id
-	const fs = require('fs')
+	
 
 	const JSONpath = activeVotesPath + '\\' + message.id + '.json'
 	
@@ -681,8 +702,6 @@ client.on('message', message => {
 				var json = JSON.stringify(data);
 				
 				var JSONpath = activeVotesPath + '\\' + messageID + '.json'
-				
-				const fs = require('fs');
 
 				try {
 					
