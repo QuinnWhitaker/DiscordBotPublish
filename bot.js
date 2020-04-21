@@ -130,7 +130,7 @@ max_Number) {
 			}
 		}
 		
-		record += 	'\n**Conclusion: ' 	+ winning_vote 	+ '(' + max_Number + '/' + numberOfVotes + ')**\n\n'
+		record += 	'\n**Conclusion: ' 	+ winning_vote 	+ ' (' + max_Number + '/' + numberOfVotes + ')**\n\n'
 		
 		return record;
 }
@@ -295,7 +295,7 @@ function updatePoll(message) {
 								winningVote = '[Tie Vote]';
 							} else {
 								// If it's a yesno vote, the winning vote is "no"
-								winningVote = tally[noVote];
+								winningVote = noVote;
 							}
 						}
 						
@@ -315,17 +315,17 @@ function updatePoll(message) {
 					console.log('Closing the poll: ');
 					
 					this_poll.isActive = false;
-					this_poll.voteStatus = 'Closed';
+					this_poll.voteStatus = voteClosed;
 					
 					console.log('Earlyclose? ', earlyClose);
 					console.log('WinningVote: ', winningVote);
 					console.log('maxNumber: ', maxNumber);
 					
 					const record = formatRecordString(
-						this_poll.vote_title, 
-						this_poll.issued_by, 
-						this_poll.multiple_choice, 
-						this_poll.vote_dictionary, 
+						this_poll.voteTitle, 
+						this_poll.issuedBy, 
+						this_poll.multipleChoice, 
+						this_poll.voteDictionary, 
 						totalVoters, 
 						winningVote, 
 						maxNumber);
