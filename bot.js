@@ -304,6 +304,7 @@ function updatePoll(message) {
 				
 				for (var tallied_vote in tally) {
 					
+					console.log('tallied_vote', tallied_vote);
 					var numberOfVotes = tally[tallied_vote];
 					totalVotes += numberOfVotes;
 					
