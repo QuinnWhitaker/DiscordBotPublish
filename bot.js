@@ -75,11 +75,11 @@ client.on('ready', () => {
 function getCentralDate() {
 	
 	var d = new Date();
-	localTime = d.getTime();
-	localOffset = d.getTimezoneOffset() * 60000;
+	var localTime = d.getTime();
+	var localOffset = d.getTimezoneOffset() * 60000;
 
 	// obtain UTC time in msec
-	utc = localTime + localOffset;
+	var utc = localTime + localOffset;
 	
 	// return new Date object for different city
 	// using supplied offset
@@ -634,12 +634,17 @@ client.on('message', message => {
 				// If the message successfully sent
 				
 				// Record the current date
-				var startDate = getCentralDate();
+				try {
+					var startDate = getCentralDate();
 				
-				var startTime = startDate.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
-				var startDay = startDate.getDate();
-				var startMonth = startDate.getMonth() + 1; // Since getMonth() returns month from 0-11 not 1-12
-				var startYear = startDate.getFullYear();
+					var startTime = startDate.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
+					var startDay = startDate.getDate();
+					var startMonth = startDate.getMonth() + 1; // Since getMonth() returns month from 0-11 not 1-12
+					var startYear = startDate.getFullYear();
+				} catch(err) {
+					console.log('Start dtae unable to be determined, reason: ', err);
+				}
+				
 				
 				// Declare the ID of the new message
 				const messageID = resultingMessage.id;
