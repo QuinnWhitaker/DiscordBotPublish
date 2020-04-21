@@ -418,7 +418,7 @@ function updatePoll(message) {
 					// Attempt to delete the old message
 					try {
 						
-						client.channels.get(voteChannelId).fetchMessage(message.id).then(msg => msg.delete());
+						message => message.delete());
 						
 					} catch(err) {
 						
