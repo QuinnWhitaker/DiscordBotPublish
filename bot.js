@@ -344,9 +344,9 @@ function updatePoll(message) {
 					
 					const record = formatRecordString(
 						this_poll.voteTitle, 
-						this_poll.startDate.getDate(),
-						this_poll.startDate.getMonth() + 1,
-						this_poll.startDate.getFullYear(),
+						this_poll.startDay,
+						this_poll.startMonth,
+						this_poll.startYear,
 						this_poll.issuedBy, 
 						this_poll.multipleChoice, 
 						newVoteDictionary, 
@@ -616,7 +616,11 @@ client.on('message', message => {
 				// If the message successfully sent
 				
 				// Record the current date
-				var date = new Date();
+				var startDate = new Date();
+				
+				var startDay = startDate.getDate();
+				var startMonth = startDate.getMonth() + 1; // Since getMonth() returns month from 0-11 not 1-12
+				var startYear = startDate.getFullYear();
 				
 				// Declare the ID of the new message
 				const messageID = resultingMessage.id;
@@ -628,7 +632,11 @@ client.on('message', message => {
 					
 					this.pollId = messageID;
 					
-					this.startDate = date;
+					this.startDay = startDay;
+					
+					this.startMonth = startMonth;
+					
+					this.startYear = startYear;
 					
 					this.multipleChoice = multipleChoice;
 					
