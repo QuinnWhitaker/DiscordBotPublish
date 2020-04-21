@@ -83,7 +83,7 @@ function getCentralDate() {
 	
 	// return new Date object for different city
 	// using supplied offset
-	return new Date(utc + (3600000*-6));
+	return new Date(utc + (3600000*-5));
 	
 }
 
@@ -128,10 +128,7 @@ vote_dictionary) {
 
 function formatRecordString(
 vote_title,
-startTime,
-startDay,
-startMonth,
-startYear,
+startDate,
 issued_by, 
 multiple_choice, 
 vote_dictionary, 
@@ -140,16 +137,12 @@ winning_vote,
 max_Number) {
 		// This function takes in all the relevant information of a poll and generates a string for the message content to be updated as
 		
-		var endDate = getCentralDate();
-		var endTime = endDate.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
-		var endDay = endDate.getDate();
-		var endMonth = endDate.getMonth() + 1; // Since getMonth() returns month from 0-11 not 1-12
-		var endYear = endDate.getFullYear();
+		var endDate = moment().tz('America/Chicago').format('LLL');
 		
 		record += 	'\n========================================'
 		var record = 	'**" ' + vote_title 	+ ' **" \n\n'
 		record += 		'Issued: ' + startMonth + '/' + startDay + '/' + startYear + ', ' + startTime + ' (CST)\n'
-		record += 		'Concluded: ' + endMonth + '/' + endDay + '/' + endYear + ', ' + endTime + ' (CST)\n\n'
+		record += 		'Concluded: ' + endDate + ' (CST)\n\n'
 		
 		record += 		'Issued By: ' 	+ issued_by + '\n\n' 
 		
@@ -361,10 +354,7 @@ function updatePoll(message) {
 					
 					const record = formatRecordString(
 						this_poll.voteTitle, 
-						this_poll.startTime,
-						this_poll.startDay,
-						this_poll.startMonth,
-						this_poll.startYear,
+						this_poll.startDate,
 						this_poll.issuedBy, 
 						this_poll.multipleChoice, 
 						newVoteDictionary, 
@@ -635,14 +625,10 @@ client.on('message', message => {
 				
 				// Record the current date
 				try {
-					var startDate = getCentralDate();
+					var startDate = moment().tz('America/Chicago').format('LLL');
 				
-					var startTime = startDate.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
-					var startDay = startDate.getDate();
-					var startMonth = startDate.getMonth() + 1; // Since getMonth() returns month from 0-11 not 1-12
-					var startYear = startDate.getFullYear();
 				} catch(err) {
-					console.log('Start dtae unable to be determined, reason: ', err);
+					console.log('Start date unable to be determined, reason: ', err);
 				}
 				
 				
@@ -656,13 +642,7 @@ client.on('message', message => {
 					
 					this.pollId = messageID;
 					
-					this.startTime = startTime,
-					
-					this.startDay = startDay;
-					
-					this.startMonth = startMonth;
-					
-					this.startYear = startYear;
+					this.startDate = startDate;
 					
 					this.multipleChoice = multipleChoice;
 					
