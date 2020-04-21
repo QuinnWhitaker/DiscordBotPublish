@@ -308,9 +308,16 @@ function updatePoll(message) {
 					console.log('WinningVote: ', winningVote);
 					console.log('maxNumber: ', maxNumber);
 					
-					const record = formatRecordString(this_poll.vote_title, this_poll.issued_by, this_poll.multiple_choice, this_poll.vote_dictionary, totalVoters, winningVote, maxNumber);
+					const record = formatRecordString(
+						this_poll.vote_title, 
+						this_poll.issued_by, 
+						this_poll.multiple_choice, 
+						this_poll.vote_dictionary, 
+						totalVoters, 
+						winningVote, 
+						maxNumber);
 					
-					let promisedRecord = client.channels.resolve(recordChannelId).send(voteTitle);
+					let promisedRecord = client.channels.resolve(recordChannelId).send(record);
 					
 					promisedRecord.then(
 
