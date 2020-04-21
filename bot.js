@@ -315,7 +315,7 @@ function updatePoll(message) {
 					console.log('Closing the poll: ');
 					
 					this_poll.isActive = false;
-					this_poll.status = 'Closed';
+					this_poll.voteStatus = 'Closed';
 					
 					console.log('Earlyclose? ', earlyClose);
 					console.log('WinningVote: ', winningVote);
