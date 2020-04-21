@@ -26,7 +26,7 @@ const recordChannelId = '702291290708246599'; // Main channel - comment out when
 const memberID = '677562715799027713';
 
 // Declare the prefix command for voting
-const voteCommand = '!vote1 ';
+const voteCommand = '!vote ';
 
 // Global variables for each thumbs up and thumbs down emoji
 const thumbsup = '👍'
