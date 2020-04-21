@@ -72,6 +72,21 @@ client.on('ready', () => {
   
 });
 
+function getCentralDate() {
+	
+	var d = new Date();
+	localTime = d.getTime();
+	localOffset = d.getTimezoneOffset() * 60000;
+
+	// obtain UTC time in msec
+	utc = localTime + localOffset;
+	
+	// return new Date object for different city
+	// using supplied offset
+	return new Date(utc + (3600000*-6));
+	
+}
+
 function formatPollString(
 vote_title, 
 issued_by, 
@@ -113,6 +128,7 @@ vote_dictionary) {
 
 function formatRecordString(
 vote_title,
+startTime,
 startDay,
 startMonth,
 startYear,
@@ -124,15 +140,16 @@ winning_vote,
 max_Number) {
 		// This function takes in all the relevant information of a poll and generates a string for the message content to be updated as
 		
-		var endDate = new Date();
+		var endDate = getCentralDate()();
+		var endTime = endDate.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
 		var endDay = endDate.getDate();
 		var endMonth = endDate.getMonth() + 1; // Since getMonth() returns month from 0-11 not 1-12
 		var endYear = endDate.getFullYear();
 		
 		record += 	'\n========================================'
 		var record = 	'**" ' + vote_title 	+ ' **" \n\n'
-		record += 		'Issued: ' + startMonth + '/' + startDay + '/' + startYear + '\n'
-		record += 		'Concluded: ' + endMonth + '/' + endDay + '/' + endYear + '\n'
+		record += 		'Issued: ' + startMonth + '/' + startDay + '/' + startYear + ', ' + startTime + ' (CST)\n'
+		record += 		'Concluded: ' + endMonth + '/' + endDay + '/' + endYear + ', ' + endTime + ' (CST)\n\n'
 		
 		record += 		'Issued By: ' 	+ issued_by + '\n\n' 
 		
@@ -344,6 +361,7 @@ function updatePoll(message) {
 					
 					const record = formatRecordString(
 						this_poll.voteTitle, 
+						this_poll.startTime,
 						this_poll.startDay,
 						this_poll.startMonth,
 						this_poll.startYear,
@@ -616,8 +634,9 @@ client.on('message', message => {
 				// If the message successfully sent
 				
 				// Record the current date
-				var startDate = new Date();
+				var startDate = getCentralDate();
 				
+				var startTime = startDate.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
 				var startDay = startDate.getDate();
 				var startMonth = startDate.getMonth() + 1; // Since getMonth() returns month from 0-11 not 1-12
 				var startYear = startDate.getFullYear();
@@ -631,6 +650,8 @@ client.on('message', message => {
 				function JsonMessage() {
 					
 					this.pollId = messageID;
+					
+					this.startTime = startTime,
 					
 					this.startDay = startDay;
 					
