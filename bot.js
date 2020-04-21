@@ -82,7 +82,27 @@ client.on('ready', () => {
 		
 		fs.readdirSync(activeVotesPath).forEach(json => {
 			
-			console.log(json);
+			const JSONpath = activeVotesPath + '/' + json;
+			
+			if (fs.existsSync(JSONpath)) {
+				
+				// Import the JSON file
+				let rawdata = fs.readFileSync(JSONpath);
+				let this_poll = JSON.parse(rawdata);
+				
+				// Get the id from the json
+				messageId = this_poll.pollId;
+				
+				let message = msg.channel.messages.fetch(messageId)
+				  .then(message => console.log(message.content))
+				  .catch(console.error);
+				
+			} else {
+				
+				console.log('JSON at path ' + JSONpath + ' does not exist.');
+				
+			}
+			
 			
 		});
 		
