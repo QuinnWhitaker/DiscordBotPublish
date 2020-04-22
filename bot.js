@@ -96,6 +96,7 @@ client.on('ready', () => {
 				client.channels.resolve(voteChannelId).messages.fetch(messageId).then(msg => {
 					
 					addCollector(msg);
+					updatePoll(msg);
 					
 				});
 				
