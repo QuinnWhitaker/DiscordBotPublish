@@ -141,7 +141,7 @@ possible_reactions,
 vote_dictionary) {
 		// This function takes in all the relevant information of a poll and generates a string for the message content to be updated as
 		
-		var poll = 	'**" ' + vote_title 	+ ' **" \n\n'
+		var poll = 	'**" ' + vote_title 	+ ' "** \n\n'
 		
 		poll += 	'Issued By: ' 	+ issued_by + '\n\n' 
 		poll +=		'== Options == \n'
@@ -185,9 +185,9 @@ max_Number) {
 		var endDate = moment().tz('America/Chicago').format('LLL');
 		
 		record += 	'\n========================================'
-		var record = 	'**" ' + vote_title 	+ ' **" \n\n'
-		record += 		'Issued: ' + startDate + ' (CST)\n'
-		record += 		'Concluded: ' + endDate + ' (CST)\n\n'
+		var record = 	'**" ' + vote_title 	+ ' "** \n\n'
+		record += 		'Issued: ' + startDate + ' CST\n'
+		record += 		'Concluded: ' + endDate + ' CST\n\n'
 		
 		record += 		'Issued By: ' 	+ issued_by + '\n\n' 
 		
