@@ -14,12 +14,12 @@ const path = require('path');
 const client = new Discord.Client();
 
 // The id of the channel where active votes will be posted.
-const voteChannelId = '702291469494517826'; // Main channel - comment out when testing
-// const voteChannelId = '702273789085483092'; // Test channel - comment out when deploying
+// const voteChannelId = '702291469494517826'; // Main channel - comment out when testing
+const voteChannelId = '702273789085483092'; // Test channel - comment out when deploying
 
 // The id of the channel where votes will be recorded.
-const recordChannelId = '702291290708246599'; // Main channel - comment out when testing
-// const recordChannelId = '702205635130818562'; // Test channel - comment out when deploying
+// const recordChannelId = '702291290708246599'; // Main channel - comment out when testing
+const recordChannelId = '702205635130818562'; // Test channel - comment out when deploying
  
 
 // The id of the Member role, the role that voters must have to participate in the vote.
