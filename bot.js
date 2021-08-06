@@ -758,5 +758,5 @@ client.on('messageReactionRemove', (reaction, user) => {
 });
 
 // Log our bot in using the token from https://discordapp.com/developers/applications/me
-client.login('Njg1MzUxMTk3MDcwMDY1Njc1.XmIGIA.sgbayqZK1UY1A3KbBi5FJB3zwj4');
+client.login('############'); // Removed for security
 
