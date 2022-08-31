@@ -13,7 +13,7 @@
     "discord.js": "^12.0.1",
     "hash": "^0.2.1",
     "moment": "^2.24.0",
-    "moment-timezone": "^0.5.28",
+    "moment-timezone": "^0.5.35",
     "winston": "^3.2.1"
   }
 }
